@@ -92,6 +92,7 @@ Example:
   "active_provider": "omlx",
   "providers": {
     "omlx": {
+      "api_key": "your-key-from-omlx-admin",
       "base_url": "http://localhost:8000/v1",
       "model": "Qwen2.5-Coder-1.5B-Instruct-MLX-8bit"
     },

@@ -737,12 +737,9 @@ class SublimeOmlxShowStatusCommand(sublime_plugin.WindowCommand):
         lines = []
         lines.append("oMLX Status")
         lines.append("==================")
-        prov_line = "Provider: {0}".format(provider_name)
-        if provider is None:
-            prov_line += " (unknown)"
-        else:
-            prov_line += " ({0})".format(_health_label(health))
-        lines.append(prov_line)
+        lines.append("Provider: {0}".format(provider_name))
+        if health is not None:
+            lines.append("Health: {0}".format(_health_label(health)))
         lines.append("Model: {0}".format(model))
         if base_url:
             lines.append("Base URL: {0}".format(base_url))

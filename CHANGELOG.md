@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Renamed the package to **LLM** (was `sublime-llm`) for Package Control. Command palette and menu captions are now prefixed `LLM:`, and the settings command is `Preferences: LLM Settings`.
+- External config directory renamed to `~/.config/sublime-omlx/` (was `~/.config/sublime-llm/`) to reflect the oMLX-focused fork.
 
 ### Fixed
 - The chat-view syntax and the settings command now resolve under the `LLM` package directory (paths were hardcoded to `sublime-llm`).

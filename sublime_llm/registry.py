@@ -3,6 +3,7 @@ from .providers import Provider
 from .providers.anthropic import AnthropicProvider
 from .providers.custom import CustomOpenAIProvider
 from .providers.deepseek import DeepSeekProvider
+from .providers.omlx import OMLXProvider
 from .providers.ollama import OllamaProvider
 from .providers.openai import OpenAIProvider
 from .providers.openrouter import OpenRouterProvider
@@ -15,6 +16,7 @@ _PROVIDER_CLASSES = {
     "anthropic": AnthropicProvider,
     "openrouter": OpenRouterProvider,
     "deepseek": DeepSeekProvider,
+    "omlx": OMLXProvider,
     "custom": CustomOpenAIProvider,
 }
 
@@ -51,6 +53,7 @@ def get_active_provider() -> Provider:
         "openrouter_title",
         "anthropic_models",
         "deepseek_models",
+        "omlx_models",
         "custom_base_url",
         "custom_models",
         "custom_label",

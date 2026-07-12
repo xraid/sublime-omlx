@@ -1,6 +1,6 @@
 {
     // Active provider. One of "ollama", "openai", "anthropic", "openrouter",
-    // "deepseek", "custom".
+    // "deepseek", "omlx", "custom".
     "provider": "ollama",
 
     // Default Ollama model. With the default provider/base_url and this model,
@@ -11,7 +11,8 @@
     // Ollama base URL. Other providers use their own defaults; override any of
     // them via the corresponding per-provider setting:
     //   "openai_base_url", "anthropic_base_url", "openrouter_base_url",
-    //   "deepseek_base_url" (all empty by default — provider defaults are used)
+    //   "deepseek_base_url", "omlx_base_url" (all empty by default — provider
+    //   defaults are used)
     //   or "custom_base_url" (required when provider is "custom").
     "base_url": "http://localhost:11434",
 
@@ -44,6 +45,10 @@
     // Override the DeepSeek model list shown by the model picker if the
     // server's /models endpoint isn't reachable.
     "deepseek_models": ["deepseek-v4-flash", "deepseek-v4-pro"],
+
+    // Override the oMLX model list shown by the model picker if the
+    // server's /models endpoint isn't reachable.
+    "omlx_models": [],
 
     // Settings for the "custom" OpenAI-compatible provider. Required when
     // provider is "custom".

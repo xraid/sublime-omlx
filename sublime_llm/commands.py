@@ -22,7 +22,7 @@ from .secrets import (
 )
 from .settings import SETTINGS_FILENAME, get_settings
 
-PROVIDER_NAMES = ["ollama", "openai", "anthropic", "openrouter", "deepseek", "custom"]
+PROVIDER_NAMES = ["ollama", "openai", "anthropic", "openrouter", "deepseek", "omlx", "custom"]
 HOSTED_PROVIDER_NAMES = ["openai", "anthropic", "openrouter", "deepseek", "custom"]
 
 
@@ -495,6 +495,7 @@ def _settings_dict_for(provider_name: str) -> dict:
         "openrouter_title",
         "anthropic_models",
         "deepseek_models",
+        "omlx_models",
         "custom_base_url",
         "custom_models",
         "custom_label",

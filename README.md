@@ -1,6 +1,8 @@
 # LLM for Sublime Text
 
-**Fork of [tonylchang/sublime-llm](https://github.com/tonylchang/sublime-llm), optimized for Mac LLM inference using [oMLX](https://github.com/jundot/omlx).**
+**Renamed to [sublime-oMLX](https://github.com/xraid/sublime-omlx): oMLX-first fork optimized for macOS Silicon with local LLM inference.**
+
+Originally forked from [tonylchang/sublime-llm](https://github.com/tonylchang/sublime-llm), this project is now dedicated to providing the best [oMLX](https://github.com/jundot/omlx) integration for macOS.
 
 A chat interface for LLMs inside Sublime Text 4. Run local models on Mac with oMLX (optimized), or use hosted providers (OpenAI, Anthropic, OpenRouter, DeepSeek) for cloud inference.
 

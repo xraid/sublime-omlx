@@ -738,8 +738,6 @@ class SublimeOmlxShowStatusCommand(sublime_plugin.WindowCommand):
         lines.append("oMLX Status")
         lines.append("==================")
         lines.append("Provider: {0}".format(provider_name))
-        if health is not None:
-            lines.append("Provider Health: {0}".format(_health_label(health)))
         lines.append("Model: {0}".format(model))
         if base_url:
             lines.append("Base URL: {0}".format(base_url))
@@ -755,10 +753,6 @@ class SublimeOmlxShowStatusCommand(sublime_plugin.WindowCommand):
             )
         else:
             lines.append("Available models: 0")
-        if memory_info:
-            lines.append("")
-            lines.append("Server Health:")
-            lines.append(memory_info)
         lines.append("Chat history: {0}".format(chat_path))
         lines.append("")
         lines.append("Settings:")
@@ -769,6 +763,10 @@ class SublimeOmlxShowStatusCommand(sublime_plugin.WindowCommand):
                 bool(settings.get("allow_secrets_in_settings_file", False))
             )
         )
+        if memory_info:
+            lines.append("")
+            lines.append("Server Health:")
+            lines.append(memory_info)
         text = "\n".join(lines) + "\n"
 
         sublime.set_timeout(lambda: self._render(text), 0)

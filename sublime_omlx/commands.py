@@ -769,9 +769,9 @@ class SublimeOmlxShowStatusCommand(sublime_plugin.WindowCommand):
         sublime.set_timeout(lambda: self._render(text), 0)
 
     def _render(self, text: str) -> None:
-        panel = self.window.create_output_panel("llm_status")
+        panel = self.window.create_output_panel("omlx_status")
         panel.run_command("append", {"characters": text})
-        self.window.run_command("show_panel", {"panel": "output.llm_status"})
+        self.window.run_command("show_panel", {"panel": "output.omlx_status"})
 
 
 class SublimeOmlxShowSecretStatusCommand(sublime_plugin.WindowCommand):
@@ -787,7 +787,7 @@ class SublimeOmlxShowSecretStatusCommand(sublime_plugin.WindowCommand):
 
         width = max(len(n) for n, _, _ in entries) + 1
         lines = []
-        lines.append("LLM External Config Status")
+        lines.append("oMLX External Config Status")
         lines.append("==================================")
         for name, key, source in entries:
             label = (name + ":").ljust(width + 1)
@@ -812,9 +812,9 @@ class SublimeOmlxShowSecretStatusCommand(sublime_plugin.WindowCommand):
         sublime.set_timeout(lambda: self._render(text), 0)
 
     def _render(self, text: str) -> None:
-        panel = self.window.create_output_panel("llm_secret_status")
+        panel = self.window.create_output_panel("omlx_secret_status")
         panel.run_command("append", {"characters": text})
-        self.window.run_command("show_panel", {"panel": "output.llm_secret_status"})
+        self.window.run_command("show_panel", {"panel": "output.omlx_secret_status"})
 
 
 _RENDER_PHANTOM_KEY = "sublime_omlx_render_link"

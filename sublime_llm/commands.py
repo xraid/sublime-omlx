@@ -22,8 +22,8 @@ from .secrets import (
 )
 from .settings import SETTINGS_FILENAME, get_settings
 
-PROVIDER_NAMES = ["ollama", "openai", "anthropic", "openrouter", "deepseek", "omlx", "custom"]
-HOSTED_PROVIDER_NAMES = ["openai", "anthropic", "openrouter", "deepseek", "custom"]
+PROVIDER_NAMES = ["omlx", "ollama", "openai", "anthropic", "openrouter", "deepseek", "custom"]
+HOSTED_PROVIDER_NAMES = ["openai", "anthropic", "openrouter", "deepseek", "omlx", "custom"]
 
 
 _SYNTAX_TO_LANG = {

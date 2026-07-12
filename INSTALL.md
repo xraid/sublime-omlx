@@ -79,9 +79,9 @@ No LLM-specific configuration is required for this default path. Run `LLM: Choos
 
    ```sh
    mkdir -p ~/.config/sublime-llm
-   cp '<Packages>/LLM/config.example.json' ~/.config/sublime-llm/config.json
+   cp <Packages>/LLM/config.example.json ~/.config/sublime-llm/config.json
    chmod 600 ~/.config/sublime-llm/config.json
-   $EDITOR ~/.config/sublime-llm/config.json
+   [subl|vim|nano] ~/.config/sublime-llm/config.json
    ```
 
    The shape stores provider-level settings under `providers.<name>`:

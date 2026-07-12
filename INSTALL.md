@@ -54,14 +54,23 @@ If any of these fail, open the Sublime console with ``Ctrl+` `` and look for `su
 
 ## First-time setup
 
-### Path A — local with oMLX (no API key, optimized for Mac)
+### Path A — local with oMLX (optimized for Mac)
 
 1. Install [oMLX](https://github.com/jundot/omlx) and start the server (follow oMLX documentation for your setup).
-2. Confirm the server is running at `http://localhost:8000/v1` (default oMLX endpoint).
-3. In Sublime: `Tools -> LLM: Open Chat` or command palette: `LLM: Open Chat`.
-4. Type a message in the chat view's input region and press `Ctrl+Enter` (macOS: `Cmd+Enter`) to send.
+2. Generate an API key in the oMLX admin interface.
+3. Copy `config.example.json` to `~/.config/sublime-llm/config.json` and add your oMLX API key:
 
-No LLM-specific configuration is required. The plugin defaults to oMLX with the standard oMLX model. Run `LLM: Choose Model` to switch models if desired.
+   ```sh
+   mkdir -p ~/.config/sublime-llm
+   cp <Packages>/LLM/config.example.json ~/.config/sublime-llm/config.json
+   chmod 600 ~/.config/sublime-llm/config.json
+   [subl|vim|nano] ~/.config/sublime-llm/config.json
+   ```
+
+   Add your oMLX API key in the `omlx` provider block (see example below).
+
+4. In Sublime: `Tools -> LLM: Open Chat` or command palette: `LLM: Open Chat`.
+5. Type a message in the chat view's input region and press `Ctrl+Enter` (macOS: `Cmd+Enter`) to send.
 
 ### Path B — hosted provider (OpenAI, Anthropic, OpenRouter, DeepSeek, custom)
 
@@ -90,6 +99,7 @@ No LLM-specific configuration is required. The plugin defaults to oMLX with the 
      "active_provider": "omlx",
      "providers": {
        "omlx": {
+         "api_key": "your-key-from-omlx-admin",
          "base_url": "http://localhost:8000/v1",
          "model": "Qwen2.5-Coder-1.5B-Instruct-MLX-8bit"
        },

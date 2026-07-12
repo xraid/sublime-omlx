@@ -33,13 +33,14 @@ The plugin requires Sublime Text build **4050 or newer** (Python 3.8+ plugin hos
 
 ## Quickstart: oMLX (optimized for Mac, default)
 
-oMLX provides optimized LLM inference for Apple Silicon and Intel Macs. No API key, no network egress, and no LLM-specific configuration needed.
+oMLX provides optimized LLM inference for Apple Silicon and Intel Macs. No network egress, local-only inference.
 
 1. Install oMLX: https://github.com/jundot/omlx
-2. Start the server: `mlx-lm serve` (or follow oMLX documentation for your setup).
-3. In Sublime: `Tools -> LLM: Open Chat` (or use the command palette: `LLM: Open Chat`).
-4. Type a message after the `<user> ` prompt.
-5. Press `Ctrl+Enter` (macOS: `Cmd+Enter`) to send.
+2. Start the server and generate an API key in the oMLX admin interface.
+3. Store the API key in `~/.config/sublime-llm/config.json` under `providers.omlx.api_key`.
+4. In Sublime: `Tools -> LLM: Open Chat` (or use the command palette: `LLM: Open Chat`).
+5. Type a message after the `<user> ` prompt.
+6. Press `Ctrl+Enter` (macOS: `Cmd+Enter`) to send.
 
 Default settings already point at local oMLX:
 
@@ -47,7 +48,7 @@ Default settings already point at local oMLX:
 - `base_url`: `"http://localhost:8000/v1"`
 - `model`: `"Qwen2.5-Coder-1.5B-Instruct-MLX-8bit"` (default oMLX model)
 
-A fresh install works after starting the oMLX server. Use `LLM: Choose Model` to switch models, or update `providers.omlx.model` in `config.json`.
+Use `LLM: Choose Model` to switch models, or update `providers.omlx.model` in `config.json`.
 
 If oMLX isn't running, the plugin reports `oMLX (UNREACHABLE)` in the provider menu.
 

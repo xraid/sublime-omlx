@@ -1,4 +1,4 @@
-"""External config and secret resolver for sublime-llm."""
+"""External config and secret resolver for sublime-omlx."""
 import json
 import os
 from typing import Optional, Set, Tuple

@@ -1,11 +1,11 @@
-"""Settings reader for sublime-llm."""
+"""Settings reader for sublime-omlx."""
 import re
 from typing import Any, Callable, List, Optional
 
 import sublime
 
 SETTINGS_FILENAME = "oMLX.sublime-settings"
-_ON_CHANGE_KEY = "sublime-llm"
+_ON_CHANGE_KEY = "sublime-omlx"
 
 DEFAULTS = {
     "provider": "ollama",

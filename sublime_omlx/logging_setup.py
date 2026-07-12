@@ -64,7 +64,7 @@ def get_logger() -> logging.Logger:
         logger.setLevel(logging.INFO)
         logger.propagate = False
         handler = logging.StreamHandler(sys.stdout)
-        handler.setFormatter(logging.Formatter("[sublime-llm] %(levelname)s %(message)s"))
+        handler.setFormatter(logging.Formatter("[sublime-omlx] %(levelname)s %(message)s"))
         handler.addFilter(SecretRedactFilter())
         logger.addHandler(handler)
         _initialized = True

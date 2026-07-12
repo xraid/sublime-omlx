@@ -1,4 +1,4 @@
-"""Window commands for sublime-llm."""
+"""Window commands for sublime-omlx."""
 import datetime
 import os
 import re

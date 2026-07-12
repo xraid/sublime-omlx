@@ -638,8 +638,8 @@ class SublimeLlmChooseProviderCommand(sublime_plugin.WindowCommand):
         provider = _try_build_provider(name)
         if provider is None:
             return "n/a"
-        # Ollama needs no key; report health directly.
-        if name == "ollama":
+        # Local servers: report health directly instead of key status.
+        if name in ("ollama", "omlx"):
             try:
                 health = provider.is_available()
             except Exception:  # noqa: BLE001

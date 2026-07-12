@@ -95,9 +95,9 @@ class OllamaProvider(Provider):
                 return ProviderHealth.UNREACHABLE
             if isinstance(reason, socket.timeout):
                 return ProviderHealth.UNREACHABLE
-            return ProviderHealth.MISCONFIGURED
+            return ProviderHealth.UNREACHABLE
         except OSError:
-            return ProviderHealth.MISCONFIGURED
+            return ProviderHealth.UNREACHABLE
         try:
             code = resp.getcode()
         except Exception:

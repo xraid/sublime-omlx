@@ -5,8 +5,8 @@ This guide covers installing LLM into Sublime Text 4 on macOS, Linux, and Window
 ## Requirements
 
 - **Sublime Text 4, build 4050 or newer.** The plugin uses the Python 3.8 plugin host introduced in build 4050. Check your build with `Help -> About Sublime Text` (macOS: `Sublime Text -> About Sublime Text`).
-- **Network access** if you plan to use a hosted provider (OpenAI, Anthropic, OpenRouter, DeepSeek, or a custom OpenAI-compatible endpoint). No network is required for Ollama.
-- **Optional: [Ollama](https://ollama.com)** if you want to run models locally.
+- **Network access** if you plan to use a hosted provider (OpenAI, Anthropic, OpenRouter, DeepSeek, or a custom OpenAI-compatible endpoint). No network is required for oMLX.
+- **Required for default setup: [oMLX](https://github.com/jundot/omlx)** for optimized Mac inference (or skip to Path B for hosted providers).
 
 ## Locate your Packages directory
 
@@ -21,19 +21,17 @@ These paths are referenced as `<Packages>` below.
 ### Option A — clone directly into the Packages directory
 
 ```sh
-cd '<Packages>'
-git clone https://github.com/tonylchang/sublime-llm.git
+cd <Packages>
+git clone https://github.com/xraid/sublime-omlx.git LLM
 ```
-
-The directory name **must** be `LLM` (not `LLM-main` or similar) — the plugin's syntax file references `Packages/LLM/ChatMarkdown.sublime-syntax`.
 
 ### Option B — clone elsewhere and symlink
 
 Useful if you want the working copy somewhere outside Sublime's Packages directory (for example, alongside your other repos).
 
 ```sh
-git clone https://github.com/tonylchang/sublime-llm.git ~/git/sublime-llm
-ln -s ~/git/sublime-llm '<Packages>/LLM'
+git clone https://github.com/xraid/sublime-omlx.git ~/git/sublime-omlx
+ln -s ~/git/sublime-omlx '<Packages>/LLM'
 ```
 
 On Windows, use `mklink /D` from an elevated `cmd.exe`:
@@ -56,13 +54,14 @@ If any of these fail, open the Sublime console with ``Ctrl+` `` and look for `su
 
 ## First-time setup
 
-### Path A — local with Ollama (no API key)
+### Path A — local with oMLX (no API key, optimized for Mac)
 
-1. Install [Ollama](https://ollama.com) and start the server: `ollama serve` (or use the desktop app).
-2. Pull the default model: `ollama pull llama3.2`.
-3. Type a message in the chat view's input region and press `Ctrl+Enter` (macOS: `Cmd+Enter`) to send.
+1. Install [oMLX](https://github.com/jundot/omlx) and start the server (follow oMLX documentation for your setup).
+2. Confirm the server is running at `http://localhost:8000/v1` (default oMLX endpoint).
+3. In Sublime: `Tools -> LLM: Open Chat` or command palette: `LLM: Open Chat`.
+4. Type a message in the chat view's input region and press `Ctrl+Enter` (macOS: `Cmd+Enter`) to send.
 
-No LLM-specific configuration is required for this default path. Run `LLM: Choose Model` only if you want to switch to a different pulled model.
+No LLM-specific configuration is required. The plugin defaults to oMLX with the standard oMLX model. Run `LLM: Choose Model` to switch models if desired.
 
 ### Path B — hosted provider (OpenAI, Anthropic, OpenRouter, DeepSeek, custom)
 
@@ -88,8 +87,12 @@ No LLM-specific configuration is required for this default path. Run `LLM: Choos
 
    ```json
    {
-     "active_provider": "anthropic",
+     "active_provider": "omlx",
      "providers": {
+       "omlx": {
+         "base_url": "http://localhost:8000/v1",
+         "model": "Qwen2.5-Coder-1.5B-Instruct-MLX-8bit"
+       },
        "anthropic": {
          "api_key": "sk-ant-...",
          "model": "claude-opus-4-7"
@@ -147,7 +150,7 @@ Optional cleanup of user state:
 
 **`failed to assign ChatMarkdown syntax` in the console.** Same root cause — the syntax file is loaded by the path `Packages/LLM/ChatMarkdown.sublime-syntax`. Rename the directory to `LLM`.
 
-**`Ollama is not running`.** Start the Ollama server (`ollama serve` or the desktop app) and confirm it's reachable at `http://localhost:11434`. The plugin also honors `OLLAMA_HOST` if your server is on another port.
+**`oMLX is not running`.** Start the oMLX server following the [oMLX documentation](https://github.com/jundot/omlx) and confirm it's reachable at `http://localhost:8000/v1` (or your configured `omlx_base_url`). Run `LLM: Show Status` to check the provider health.
 
 **`MISSING_CREDENTIAL` or `BAD_CREDENTIAL` for a hosted provider.** Run `LLM: Show External Config Status` to see where each key was resolved from. On macOS, GUI apps launched from the Dock or Spotlight don't inherit your shell's environment variables — use the external config file instead, or launch Sublime from a terminal with `subl`.
 

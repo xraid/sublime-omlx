@@ -1,6 +1,8 @@
 # LLM for Sublime Text
 
-A chat interface for LLMs (Ollama, OpenAI, Anthropic, OpenRouter, DeepSeek, plus any OpenAI-compatible endpoint) inside Sublime Text 4.
+**Fork of [tonylchang/sublime-llm](https://github.com/tonylchang/sublime-llm), optimized for Mac LLM inference using [oMLX](https://github.com/jundot/omlx).**
+
+A chat interface for LLMs inside Sublime Text 4. Run local models on Mac with oMLX (optimized), or use hosted providers (OpenAI, Anthropic, OpenRouter, DeepSeek) for cloud inference.
 
 ![LLM streaming a response](docs/demo.gif)
 
@@ -8,8 +10,8 @@ Use it for:
 
 - Conversational coding help without leaving the editor.
 - Sending a code selection into the chat with one keystroke.
-- Local, private inference via Ollama (default).
-- Hosted models when you want them, with provider config and API keys stored outside the dotfiles-symlink scope.
+- Local, private Mac inference via oMLX (optimized, default).
+- Hosted cloud models when you need them (OpenAI, Anthropic, OpenRouter, DeepSeek), with provider config and API keys stored securely outside dotfiles scope.
 
 ## Install
 
@@ -29,31 +31,29 @@ Use it for:
 
 The plugin requires Sublime Text build **4050 or newer** (Python 3.8+ plugin host).
 
-## Quickstart: Ollama (works by default)
+## Quickstart: oMLX (optimized for Mac, default)
 
-Ollama runs models locally — no API key, no network egress, and no LLM-specific configuration if you use the default `llama3.2` model.
+oMLX provides optimized LLM inference for Apple Silicon and Intel Macs. No API key, no network egress, and no LLM-specific configuration needed.
 
-1. Install Ollama: https://ollama.com
-2. Start the server: `ollama serve` (or use the desktop app).
-3. Pull a model: `ollama pull llama3.2`
-4. In Sublime: use command palette: `LLM: Choose Model`
-5. In Sublime: `Tools -> LLM: Open Chat` (or use the command palette: `LLM: Open Chat`).
-6. Type a message after the `<user> ` prompt.
-7. Press `Ctrl+Enter` (macOS: `Cmd+Enter`) to send.
+1. Install oMLX: https://github.com/jundot/omlx
+2. Start the server: `mlx-lm serve` (or follow oMLX documentation for your setup).
+3. In Sublime: `Tools -> LLM: Open Chat` (or use the command palette: `LLM: Open Chat`).
+4. Type a message after the `<user> ` prompt.
+5. Press `Ctrl+Enter` (macOS: `Cmd+Enter`) to send.
 
-Default settings already point at local Ollama:
+Default settings already point at local oMLX:
 
-- `provider`: `"ollama"`
-- `base_url`: `"http://localhost:11434"` (also honors the `OLLAMA_HOST` environment variable when `base_url` is unset)
-- `model`: `"llama3.2"`
+- `provider`: `"omlx"`
+- `base_url`: `"http://localhost:8000/v1"`
+- `model`: `"Qwen2.5-Coder-1.5B-Instruct-MLX-8bit"` (default oMLX model)
 
-That means a fresh install should work after `ollama serve` and `ollama pull llama3.2`. Use `LLM: Choose Model` or set `providers.ollama.model` in `config.json` only if you want a different local model.
+A fresh install works after starting the oMLX server. Use `LLM: Choose Model` to switch models, or update `providers.omlx.model` in `config.json`.
 
-If Ollama isn't running, errors surface as `Ollama is not running. Start it with ollama serve.`
+If oMLX isn't running, the plugin reports `oMLX (UNREACHABLE)` in the provider menu.
 
-## Hosted providers
+## Hosted cloud providers
 
-To use OpenAI, Anthropic, OpenRouter, or DeepSeek, update `api_key` in `config.json` with a key from the provider in question:
+Beyond local oMLX inference, you can use hosted cloud providers. To configure OpenAI, Anthropic, OpenRouter, DeepSeek, or a custom OpenAI-compatible endpoint, update `api_key` in `config.json`:
 
    ```json
     "openai": {
@@ -88,11 +88,11 @@ Example:
 
 ```json
 {
-  "active_provider": "ollama",
+  "active_provider": "omlx",
   "providers": {
-    "ollama": {
-      "base_url": "http://localhost:11434",
-      "model": "llama3.2"
+    "omlx": {
+      "base_url": "http://localhost:8000/v1",
+      "model": "Qwen2.5-Coder-1.5B-Instruct-MLX-8bit"
     },
     "openai": {
       "api_key": "sk-...",
@@ -184,9 +184,9 @@ General chat settings live in `LLM.sublime-settings` (defaults shipped with the 
 
 | Key | Default | Purpose |
 |---|---|---|
-| `provider` | `"ollama"` | Active provider. One of `ollama`, `openai`, `anthropic`, `openrouter`, `deepseek`, `custom`. |
-| `model` | `"llama3.2"` | Model identifier for the active provider. The default matches the Ollama quickstart; set another model via `config.json`, user settings, or `LLM: Choose Model`. |
-| `base_url` | `"http://localhost:11434"` | Used by the Ollama provider. Other providers have their own defaults (see provider matrix). |
+| `provider` | `"omlx"` | Active provider. One of `omlx`, `openai`, `anthropic`, `openrouter`, `deepseek`, `custom`. |
+| `model` | `"Qwen2.5-Coder-1.5B-Instruct-MLX-8bit"` | Model identifier for the active provider. The default is the oMLX quickstart model; set another via `config.json`, user settings, or `LLM: Choose Model`. |
+| `omlx_base_url` | `"http://localhost:8000/v1"` | oMLX server endpoint. Used by the oMLX provider. |
 | `temperature` | `0.7` | Sampling temperature. |
 | `max_tokens` | `4096` | Max completion tokens. Required for Anthropic; recommended for OpenAI. |
 | `system_prompt` | `""` | Optional system message prepended to each conversation. |
@@ -196,6 +196,7 @@ General chat settings live in `LLM.sublime-settings` (defaults shipped with the 
 | `anthropic_version` | `"2023-06-01"` | Value of the `anthropic-version` request header. |
 | `anthropic_models` | `[]` | Override the model list shown by the Anthropic provider. Empty means use the plugin's built-in default list. |
 | `deepseek_models` | `["deepseek-v4-flash", "deepseek-v4-pro"]` | Fallback model list for DeepSeek when `/models` isn't reachable. |
+| `omlx_models` | `[]` | Fallback model list for oMLX when `/models` isn't reachable. |
 | `custom_base_url` | `""` | Required when `provider` is `"custom"`. Example: `http://localhost:1234/v1` for LM Studio. |
 | `custom_api_key` | `""` | Optional API key for the custom endpoint (the env var `CUSTOM_API_KEY` and the external config file are preferred). |
 | `custom_models` | `[]` | Fallback list if the custom server doesn't expose `/v1/models`. |
@@ -250,9 +251,9 @@ If the chat input already contains text, the selection is appended below a blank
 
 ## Troubleshooting
 
-**Ollama not running.** Start it with `ollama serve` or the desktop app. The plugin reports `Ollama is not running. Start it with ollama serve.` in the status bar.
+**oMLX not running.** Start the oMLX server following the [oMLX documentation](https://github.com/jundot/omlx) and confirm it's reachable at `http://localhost:8000/v1` (or your configured `omlx_base_url`). The plugin reports `oMLX (UNREACHABLE)` in the provider menu if the server isn't available.
 
-**`405 Method Not Allowed` or similar from Ollama.** Make sure your `base_url` is a host plus optional port — no trailing path component. Default is `http://localhost:11434`; the plugin appends `/api/chat` and `/api/tags` internally. The setting also honors `http://host:port` without a scheme (the plugin prepends `http://`).
+**`Connection refused` or similar errors.** Make sure your `omlx_base_url` is correct and the oMLX server is running. Default is `http://localhost:8000/v1`. The plugin appends `/models` and uses OpenAI-compatible chat endpoints.
 
 **`UNREACHABLE` for a hosted provider.** Check your network and corporate proxy. The plugin issues plain `urllib` requests; it doesn't read `http_proxy`/`https_proxy` env vars automatically (Sublime's bundled Python doesn't include `urllib3` request-level proxy detection).
 

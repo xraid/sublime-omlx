@@ -732,7 +732,7 @@ class SublimeOmlxShowStatusCommand(sublime_plugin.WindowCommand):
         chat_path = _chat_history_path(self.window)
 
         lines = []
-        lines.append("LLM Status")
+        lines.append("oMLX Status")
         lines.append("==================")
         prov_line = "Provider: {0}".format(provider_name)
         if provider is None:

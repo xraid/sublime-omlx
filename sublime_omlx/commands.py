@@ -801,11 +801,9 @@ class SublimeOmlxShowStatusCommand(sublime_plugin.WindowCommand):
                 current_gb = current_mem / (1024 * 1024 * 1024)
                 ceiling_gb = ceiling / (1024 * 1024 * 1024)
                 available_gb = (ceiling - current_mem) / (1024 * 1024 * 1024)
-                lines.append(
-                    "  Memory: {0:.1f} GB / {1:.1f} GB ({2:.1f} GB free)".format(
-                        current_gb, ceiling_gb, available_gb
-                    )
-                )
+                lines.append("  Memory: {0:.1f} GB".format(current_gb))
+                lines.append("  Ceiling: {0:.1f} GB".format(ceiling_gb))
+                lines.append("  Free: {0:.1f} GB".format(available_gb))
             return "\n".join(lines) if lines else ""
         except Exception as e:  # noqa: BLE001
             log.debug("omlx health fetch failed: %s", e)
@@ -880,11 +878,9 @@ class SublimeOmlxShowServerHealthCommand(sublime_plugin.WindowCommand):
                 current_gb = current_mem / (1024 * 1024 * 1024)
                 ceiling_gb = ceiling / (1024 * 1024 * 1024)
                 available_gb = (ceiling - current_mem) / (1024 * 1024 * 1024)
-                lines.append(
-                    "Memory: {0:.1f} GB / {1:.1f} GB ({2:.1f} GB free)".format(
-                        current_gb, ceiling_gb, available_gb
-                    )
-                )
+                lines.append("Memory: {0:.1f} GB".format(current_gb))
+                lines.append("Ceiling: {0:.1f} GB".format(ceiling_gb))
+                lines.append("Free: {0:.1f} GB".format(available_gb))
             return "\n".join(lines) if lines else ""
         except Exception as e:  # noqa: BLE001
             log.error("omlx health fetch failed: %s", e)

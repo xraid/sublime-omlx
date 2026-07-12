@@ -31,4 +31,4 @@ from .sublime_omlx.text_commands import SublimeOmlxAppendCommand, SublimeOmlxNoo
 
 
 def plugin_loaded() -> None:
-    get_logger().info("LLM loaded")
+    get_logger().info("oMLX loaded")

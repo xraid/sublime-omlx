@@ -866,8 +866,6 @@ class SublimeOmlxShowServerHealthCommand(sublime_plugin.WindowCommand):
             lines = []
             if "status" in data:
                 lines.append("Status: {0}".format(data["status"]))
-            if "default_model" in data:
-                lines.append("Default Model: {0}".format(data["default_model"]))
             if "model_count" in data:
                 lines.append("Available Models: {0}".format(data["model_count"]))
             if "loaded_count" in data:

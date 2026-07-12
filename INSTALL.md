@@ -65,7 +65,7 @@ After cloning or symlinking, restart Sublime Text so the plugin host loads the p
 2. Run `oMLX: Open Chat`. A new tab named **oMLX Chat** should appear with a `<user> ` prompt at the bottom.
 3. Run `oMLX: Show Status`. The status panel should report the active provider, model, base URL, and a list of available models.
 
-If any of these fail, open the Sublime console with ``Ctrl+` `` and look for `sublime-llm` log lines.
+If any of these fail, open the Sublime console with ``Ctrl+` `` and look for `sublime-omlx` log lines.
 
 ## First-time setup
 

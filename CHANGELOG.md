@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Initial release.
 
 ### Added
-- External provider config at `~/.config/sublime-llm/config.json`, with `active_provider` and provider-level settings under `providers.<name>`.
+- External provider config at `~/.config/sublime-omlx/config.json`, with `active_provider` and provider-level settings under `providers.<name>`.
 - Backward-compatible reading of the legacy key-only `secrets.json` file.
 - Sublime Text 4 chat view with Markdown turn headers (`### User` / `### Assistant`).
 - Ollama provider with NDJSON streaming and model discovery.
@@ -46,7 +46,7 @@ Initial release.
 - Per-project chat persistence under `Packages/User/sublime-llm/chats/<slug>.md`.
 - Cancellation via `Esc` (during stream) or `sublime-llm: Cancel` command palette entry.
 - Settings reader with placeholder detection and live-reload via `add_on_change`.
-- External config resolver chain: env vars -> `~/.config/sublime-llm/config.json` (0o600) -> legacy `secrets.json` -> settings file (gated off by default).
+- External config resolver chain: env vars -> `~/.config/sublime-omlx/config.json` (0o600) -> legacy `secrets.json` -> settings file (gated off by default).
 - Secret-redacting logging filter applied to every handler in the plugin's logger namespace.
 - Token batching for streaming (50 ms / 64-char threshold) with conditional auto-scroll.
 - Custom `ChatMarkdown.sublime-syntax` extending built-in Markdown with turn-header scopes.

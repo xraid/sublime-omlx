@@ -9,7 +9,7 @@ CHANGES
 - Internal cleanup: the plugin uses relative imports and no longer
   manipulates sys.path.
 
-Your external config (~/.config/sublime-llm/config.json), saved chats,
+Your external config (~/.config/sublime-omlx/config.json), saved chats,
 and user settings file are unchanged.
 
 See CHANGELOG.md for details.

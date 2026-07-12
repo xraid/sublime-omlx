@@ -58,13 +58,13 @@ If any of these fail, open the Sublime console with ``Ctrl+` `` and look for `su
 
 1. Install [oMLX](https://github.com/jundot/omlx) and start the server (follow oMLX documentation for your setup).
 2. Generate an API key in the oMLX admin interface.
-3. Copy `config.example.json` to `~/.config/sublime-llm/config.json` and add your oMLX API key:
+3. Copy `config.example.json` to `~/.config/sublime-omlx/config.json` and add your oMLX API key:
 
    ```sh
-   mkdir -p ~/.config/sublime-llm
-   cp <Packages>/LLM/config.example.json ~/.config/sublime-llm/config.json
-   chmod 600 ~/.config/sublime-llm/config.json
-   [subl|vim|nano] ~/.config/sublime-llm/config.json
+   mkdir -p ~/.config/sublime-omlx
+   cp <Packages>/LLM/config.example.json ~/.config/sublime-omlx/config.json
+   chmod 600 ~/.config/sublime-omlx/config.json
+   [subl|vim|nano] ~/.config/sublime-omlx/config.json
    ```
 
    Add your oMLX API key in the `omlx` provider block (see example below).
@@ -83,13 +83,13 @@ If any of these fail, open the Sublime console with ``Ctrl+` `` and look for `su
    }
    ```
 
-2. Provide an API key. The recommended path is the external config file at `~/.config/sublime-llm/config.json` (macOS/Linux) or `%APPDATA%\sublime-llm\config.json` (Windows). A template is shipped at [`config.example.json`](config.example.json) at the repo root — copy it into place and edit:
+2. Provide an API key. The recommended path is the external config file at `~/.config/sublime-omlx/config.json` (macOS/Linux) or `%APPDATA%\sublime-omlx\config.json` (Windows). A template is shipped at [`config.example.json`](config.example.json) at the repo root — copy it into place and edit:
 
    ```sh
-   mkdir -p ~/.config/sublime-llm
-   cp <Packages>/LLM/config.example.json ~/.config/sublime-llm/config.json
-   chmod 600 ~/.config/sublime-llm/config.json
-   [subl|vim|nano] ~/.config/sublime-llm/config.json
+   mkdir -p ~/.config/sublime-omlx
+   cp <Packages>/LLM/config.example.json ~/.config/sublime-omlx/config.json
+   chmod 600 ~/.config/sublime-omlx/config.json
+   [subl|vim|nano] ~/.config/sublime-omlx/config.json
    ```
 
    The shape stores provider-level settings under `providers.<name>`:
@@ -151,7 +151,7 @@ Optional cleanup of user state:
 
 - Per-project chat transcripts: `<Packages>/User/sublime-llm/chats/`
 - User overrides: `<Packages>/User/LLM.sublime-settings`
-- External config file: `~/.config/sublime-llm/config.json` (macOS/Linux) or `%APPDATA%\sublime-llm\config.json` (Windows)
+- External config file: `~/.config/sublime-omlx/config.json` (macOS/Linux) or `%APPDATA%\sublime-omlx\config.json` (Windows)
 - Legacy key-only file: existing `secrets.json` installs are still readable for backward compatibility; new installs should use `config.json`
 
 ## Troubleshooting

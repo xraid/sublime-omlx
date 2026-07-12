@@ -1,12 +1,16 @@
 {
     // Active provider. One of "ollama", "openai", "anthropic", "openrouter",
     // "deepseek", "omlx", "custom".
-    "provider": "ollama",
+    "provider": "omlx",
 
     // Default Ollama model. With the default provider/base_url and this model,
     // sublime-llm works without plugin-specific configuration after you install
     // Ollama, start it, and run `ollama pull llama3.2`.
-    "model": "llama3.2",
+    "model": "Qwen2.5-Coder-1.5B-Instruct-MLX-8bit",
+
+    // Override the oMLX model list shown by the model picker if the
+    // server's /models endpoint isn't reachable.
+    "omlx_models": [],
 
     // Ollama base URL. Other providers use their own defaults; override any of
     // them via the corresponding per-provider setting:
@@ -14,7 +18,7 @@
     //   "deepseek_base_url", "omlx_base_url" (all empty by default — provider
     //   defaults are used)
     //   or "custom_base_url" (required when provider is "custom").
-    "base_url": "http://localhost:11434",
+    "base_url": "http://localhost:8000/v1",
 
     // Sampling temperature passed to the provider.
     "temperature": 0.7,
@@ -27,7 +31,7 @@
 
     // If true, allows hosted-provider API keys to be read from this settings
     // file (keys ending in _api_key). NOT recommended — prefer env vars or
-    // the external config file at ~/.config/sublime-llm/config.json. See
+    // the external config file at ~/.config/sublime-omlx/config.json. See
     // README "External provider config".
     "allow_secrets_in_settings_file": false,
 
@@ -46,9 +50,6 @@
     // server's /models endpoint isn't reachable.
     "deepseek_models": ["deepseek-v4-flash", "deepseek-v4-pro"],
 
-    // Override the oMLX model list shown by the model picker if the
-    // server's /models endpoint isn't reachable.
-    "omlx_models": [],
 
     // Settings for the "custom" OpenAI-compatible provider. Required when
     // provider is "custom".

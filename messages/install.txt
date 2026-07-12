@@ -16,8 +16,8 @@ HOSTED PROVIDERS
 Set "provider" to "openai", "anthropic", "openrouter", "deepseek", or "custom".
 API keys: use env vars (OPENAI_API_KEY, ANTHROPIC_API_KEY, OPENROUTER_API_KEY,
 DEEPSEEK_API_KEY, CUSTOM_API_KEY) or the external config file at
-~/.config/sublime-llm/config.json (macOS/Linux) or
-%APPDATA%\sublime-llm\config.json (Windows).
+~/.config/sublime-omlx/config.json (macOS/Linux) or
+%APPDATA%\sublime-omlx\config.json (Windows).
 
 DO NOT commit your LLM.sublime-settings if you set keys there. The
 plugin refuses to read keys from the settings file unless you opt in with

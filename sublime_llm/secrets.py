@@ -17,9 +17,9 @@ def _is_posix() -> bool:
 
 def _config_dir() -> str:
     if _is_posix():
-        return os.path.expanduser("~/.config/sublime-llm")
+        return os.path.expanduser("~/.config/sublime-omlx")
     base = os.environ.get("APPDATA") or os.path.expanduser("~")
-    return os.path.join(base, "sublime-llm")
+    return os.path.join(base, "sublime-omlx")
 
 
 def get_external_config_file_path() -> str:

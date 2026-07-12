@@ -49,8 +49,8 @@ class PublicTextTests(DeferrableTestCase):
             "legacy secrets files",
             "external secrets file",
             "Where to put your API keys",
-            "~/.config/sublime-llm/secrets.json",
-            "%APPDATA%\\sublime-llm\\secrets.json",
+            "~/.config/sublime-omlx/secrets.json",
+            "%APPDATA%\\sublime-omlx\\secrets.json",
         ]
         for path in checked:
             text = path.read_text(encoding="utf-8")

@@ -37,7 +37,7 @@ oMLX provides optimized LLM inference for Apple Silicon and Intel Macs. No netwo
 
 1. Install oMLX: https://github.com/jundot/omlx
 2. Start the server and generate an API key in the oMLX admin interface.
-3. Store the API key in `~/.config/sublime-llm/config.json` under `providers.omlx.api_key`.
+3. Store the API key in `~/.config/sublime-omlx/config.json` under `providers.omlx.api_key`.
 4. In Sublime: `Tools -> LLM: Open Chat` (or use the command palette: `LLM: Open Chat`).
 5. Type a message after the `<user> ` prompt.
 6. Press `Ctrl+Enter` (macOS: `Cmd+Enter`) to send.
@@ -83,7 +83,7 @@ Beyond local oMLX inference, you can use hosted cloud providers. To configure Op
 
 ## External provider config and API keys
 
-LLM keeps provider-level settings outside Sublime's settings file. The default external config path is `~/.config/sublime-llm/config.json` on macOS / Linux, or `%APPDATA%\sublime-llm\config.json` on Windows. A template is shipped as [`config.example.json`](config.example.json).
+LLM keeps provider-level settings outside Sublime's settings file. The default external config path is `~/.config/sublime-omlx/config.json` on macOS / Linux, or `%APPDATA%\sublime-omlx\config.json` on Windows. A template is shipped as [`config.example.json`](config.example.json).
 
 Example:
 

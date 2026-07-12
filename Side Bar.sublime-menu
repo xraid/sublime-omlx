@@ -1,3 +1,4 @@
 [
-    {"caption": "oMLX: Send File to Chat", "command": "sublime_omlx_send_file"}
+    {"caption": "oMLX: Send File to Chat", "command": "sublime_omlx_send_file"},
+    {"caption": "oMLX: Choose Model", "command": "sublime_omlx_choose_model"}
 ]

@@ -23,10 +23,19 @@ Use it for:
    - macOS: `~/Library/Application Support/Sublime Text/Packages/`
    - Linux: `~/.config/sublime-text/Packages/`
    - Windows: `%APPDATA%\Sublime Text\Packages\`
-2. Clone or symlink this repository into that directory as `LLM`:
 
+2. Clone the repository into that directory as `sublime-omlx`:
+
+   ```bash
+   cd <packages-dir>
+   git clone https://github.com/xraid/sublime-omlx.git sublime-omlx
    ```
-   ln -s <path-to-clone> '<packages-dir>/LLM'
+
+   Or, clone elsewhere and symlink:
+
+   ```bash
+   git clone https://github.com/xraid/sublime-omlx.git ~/path/to/sublime-omlx
+   ln -s ~/path/to/sublime-omlx '<packages-dir>/sublime-omlx'
    ```
 
 3. Restart Sublime Text.

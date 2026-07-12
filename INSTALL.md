@@ -1,6 +1,6 @@
 # Installation
 
-This guide covers installing LLM into Sublime Text 4 on macOS, Linux, and Windows. For configuration and usage after install, see the [README](README.md).
+This guide covers installing oMLX into Sublime Text 4 on macOS, Linux, and Windows. For configuration and usage after install, see the [README](README.md).
 
 ## Requirements
 
@@ -16,7 +16,7 @@ Once sublime-oMLX is listed on [Package Control](https://packagecontrol.io):
 
 1. Open the command palette (`Ctrl+Shift+P` / `Cmd+Shift+P`).
 2. Run `Package Control: Install Package`.
-3. Search for `LLM` and install.
+3. Search for `oMLX` and install.
 4. Restart Sublime Text.
 
 ### Manual install (development / pre-release)
@@ -37,7 +37,7 @@ These paths are referenced as `<Packages>` below.
 
 ```sh
 cd <Packages>
-git clone https://github.com/xraid/sublime-omlx.git LLM
+git clone https://github.com/xraid/sublime-omlx.git sublime-omlx
 ```
 
 #### Option B — clone elsewhere and symlink
@@ -46,13 +46,13 @@ Useful if you want the working copy somewhere outside Sublime's Packages directo
 
 ```sh
 git clone https://github.com/xraid/sublime-omlx.git ~/git/sublime-omlx
-ln -s ~/git/sublime-omlx '<Packages>/LLM'
+ln -s ~/git/sublime-omlx '<Packages>/sublime-omlx'
 ```
 
 On Windows, use `mklink /D` from an elevated `cmd.exe`:
 
 ```cmd
-mklink /D "%APPDATA%\Sublime Text\Packages\LLM" "C:\path\to\your\clone"
+mklink /D "%APPDATA%\Sublime Text\Packages\sublime-omlx" "C:\path\to\your\clone"
 ```
 
 #### Restart Sublime Text
@@ -61,9 +61,9 @@ After cloning or symlinking, restart Sublime Text so the plugin host loads the p
 
 ## Verify the install
 
-1. Open the command palette (`Ctrl+Shift+P` / `Cmd+Shift+P`) and type `LLM:`. You should see entries like `LLM: Open Chat`, `LLM: Choose Provider`, `LLM: Show Status`.
-2. Run `LLM: Open Chat`. A new tab named **LLM Chat** should appear with a `<user> ` prompt at the bottom.
-3. Run `LLM: Show Status`. The status panel should report the active provider, model, base URL, and a list of available models.
+1. Open the command palette (`Ctrl+Shift+P` / `Cmd+Shift+P`) and type `oMLX:`. You should see entries like `oMLX: Open Chat`, `oMLX: Choose Provider`, `oMLX: Show Status`.
+2. Run `oMLX: Open Chat`. A new tab named **oMLX Chat** should appear with a `<user> ` prompt at the bottom.
+3. Run `oMLX: Show Status`. The status panel should report the active provider, model, base URL, and a list of available models.
 
 If any of these fail, open the Sublime console with ``Ctrl+` `` and look for `sublime-llm` log lines.
 
@@ -77,19 +77,19 @@ If any of these fail, open the Sublime console with ``Ctrl+` `` and look for `su
 
    ```sh
    mkdir -p ~/.config/sublime-omlx
-   cp <Packages>/LLM/config.example.json ~/.config/sublime-omlx/config.json
+   cp <Packages>/sublime-omlx/config.example.json ~/.config/sublime-omlx/config.json
    chmod 600 ~/.config/sublime-omlx/config.json
    [subl|vim|nano] ~/.config/sublime-omlx/config.json
    ```
 
    Add your oMLX API key in the `omlx` provider block (see example below).
 
-4. In Sublime: `Tools -> LLM: Open Chat` or command palette: `LLM: Open Chat`.
+4. In Sublime: `Tools -> oMLX: Open Chat` or command palette: `oMLX: Open Chat`.
 5. Type a message in the chat view's input region and press `Ctrl+Enter` (macOS: `Cmd+Enter`) to send.
 
 ### Path B — hosted provider (OpenAI, Anthropic, OpenRouter, DeepSeek, custom)
 
-1. Open `Preferences -> Package Settings -> LLM -> Settings` and set `provider` and `model`. Example:
+1. Open `Preferences -> Package Settings -> oMLX -> Settings` and set `provider` and `model`. Example:
 
    ```json
    {
@@ -102,7 +102,7 @@ If any of these fail, open the Sublime console with ``Ctrl+` `` and look for `su
 
    ```sh
    mkdir -p ~/.config/sublime-omlx
-   cp <Packages>/LLM/config.example.json ~/.config/sublime-omlx/config.json
+   cp <Packages>/sublime-omlx/config.example.json ~/.config/sublime-omlx/config.json
    chmod 600 ~/.config/sublime-omlx/config.json
    [subl|vim|nano] ~/.config/sublime-omlx/config.json
    ```
@@ -128,8 +128,8 @@ If any of these fail, open the Sublime console with ``Ctrl+` `` and look for `su
 
    Any value containing `REPLACE_ME` is treated as a placeholder and ignored, so an unedited copy is harmless. The plugin enforces `0600` permissions on this file when it writes it. Existing legacy key-only `secrets.json` installs are still readable for backward compatibility. See the [README](README.md#external-provider-config-and-api-keys) for the full key-resolution chain.
 
-3. Run `LLM: Show External Config Status` to confirm the key was picked up.
-4. Send a test message via `LLM: Open Chat`.
+3. Run `oMLX: Show External Config Status` to confirm the key was picked up.
+4. Send a test message via `oMLX: Open Chat`.
 
 ## Updating
 
@@ -142,7 +142,7 @@ Updates land automatically. Run `Package Control: Upgrade Package` to pull the n
 Pull from the clone:
 
 ```sh
-cd '<Packages>/LLM'   # or wherever your clone lives
+cd '<Packages>/sublime-omlx'   # or wherever your clone lives
 git pull
 ```
 
@@ -159,7 +159,7 @@ Run `Package Control: Remove Package` and pick `LLM`.
 Remove the directory or symlink from the Packages directory:
 
 ```sh
-rm -rf '<Packages>/LLM'   # or `unlink` if it's a symlink
+rm -rf '<Packages>/sublime-omlx'   # or `unlink` if it's a symlink
 ```
 
 Optional cleanup of user state:
@@ -171,12 +171,12 @@ Optional cleanup of user state:
 
 ## Troubleshooting
 
-**Commands don't appear in the palette.** Confirm the directory under `<Packages>` is named exactly `LLM` and that you restarted Sublime after install.
+**Commands don't appear in the palette.** Confirm the directory under `<Packages>` is named exactly `sublime-omlx` and that you restarted Sublime after install.
 
-**`failed to assign ChatMarkdown syntax` in the console.** Same root cause — the syntax file is loaded by the path `Packages/LLM/ChatMarkdown.sublime-syntax`. Rename the directory to `LLM`.
+**`failed to assign ChatMarkdown syntax` in the console.** Same root cause — the syntax file is loaded by the path `Packages/sublime-omlx/ChatMarkdown.sublime-syntax`. Rename the directory to `sublime-omlx`.
 
-**`oMLX is not running`.** Start the oMLX server following the [oMLX documentation](https://github.com/jundot/omlx) and confirm it's reachable at `http://localhost:8000/v1` (or your configured `omlx_base_url`). Run `LLM: Show Status` to check the provider health.
+**`oMLX is not running`.** Start the oMLX server following the [oMLX documentation](https://github.com/jundot/omlx) and confirm it's reachable at `http://localhost:8000/v1` (or your configured `omlx_base_url`). Run `oMLX: Show Status` to check the provider health.
 
-**`MISSING_CREDENTIAL` or `BAD_CREDENTIAL` for a hosted provider.** Run `LLM: Show External Config Status` to see where each key was resolved from. On macOS, GUI apps launched from the Dock or Spotlight don't inherit your shell's environment variables — use the external config file instead, or launch Sublime from a terminal with `subl`.
+**`MISSING_CREDENTIAL` or `BAD_CREDENTIAL` for a hosted provider.** Run `oMLX: Show External Config Status` to see where each key was resolved from. On macOS, GUI apps launched from the Dock or Spotlight don't inherit your shell's environment variables — use the external config file instead, or launch Sublime from a terminal with `subl`.
 
 For other issues, see the [Troubleshooting section of the README](README.md#troubleshooting).

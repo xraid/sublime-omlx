@@ -861,6 +861,8 @@ class SublimeOmlxShowServerHealthCommand(sublime_plugin.WindowCommand):
             data = json.loads(resp.read().decode("utf-8"))
             resp.close()
 
+            log.info("omlx health data: %s", data)
+
             lines = []
             if "status" in data:
                 lines.append("Status: {0}".format(data["status"]))
@@ -873,6 +875,7 @@ class SublimeOmlxShowServerHealthCommand(sublime_plugin.WindowCommand):
 
             current_mem = data.get("current_model_memory", 0)
             ceiling = data.get("final_ceiling", 0)
+            log.info("omlx memory: current=%d ceiling=%d", current_mem, ceiling)
             if ceiling > 0:
                 current_mb = current_mem / (1024 * 1024)
                 ceiling_gb = ceiling / (1024 * 1024 * 1024)
@@ -884,7 +887,7 @@ class SublimeOmlxShowServerHealthCommand(sublime_plugin.WindowCommand):
                 )
             return "\n".join(lines) if lines else ""
         except Exception as e:  # noqa: BLE001
-            log.debug("omlx health fetch failed: %s", e)
+            log.error("omlx health fetch failed: %s", e)
         return ""
 
     def _render(self, text: str) -> None:

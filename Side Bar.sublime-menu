@@ -1,4 +1,19 @@
 [
-    {"caption": "oMLX: Send File to Chat", "command": "sublime_omlx_send_file"},
-    {"caption": "oMLX: Choose Model", "command": "sublime_omlx_choose_model"}
+    {
+        "caption": "oMLX",
+        "children": [
+            {"caption": "Open Chat", "command": "sublime_omlx_open_chat"},
+            {"caption": "Send File to Chat", "command": "sublime_omlx_send_file"},
+            {"caption": "Submit Message", "command": "sublime_omlx_submit"},
+            {"caption": "Cancel", "command": "sublime_omlx_cancel"},
+            {"-": null},
+            {"caption": "Choose Model", "command": "sublime_omlx_choose_model"},
+            {"caption": "Choose Provider", "command": "sublime_omlx_choose_provider"},
+            {"-": null},
+            {"caption": "Clear Chat History", "command": "sublime_omlx_clear_chat"},
+            {"caption": "Show Status", "command": "sublime_omlx_show_status"},
+            {"caption": "Show External Config Status", "command": "sublime_omlx_show_secret_status"},
+            {"caption": "Render Last Response", "command": "sublime_omlx_render_last_response"}
+        ]
+    }
 ]

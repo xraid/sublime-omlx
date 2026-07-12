@@ -745,10 +745,11 @@ class SublimeOmlxShowStatusCommand(sublime_plugin.WindowCommand):
             lines.append("Base URL: {0}".format(base_url))
         if key_line:
             lines.append(key_line)
-        preview = ", ".join(models[:4])
-        if len(models) > 4:
-            preview += ", ..."
         if models:
+            if len(models) <= 5:
+                preview = ", ".join(models)
+            else:
+                preview = ", ".join(models[:4]) + ", ..."
             lines.append(
                 "Available models: {0} ({1})".format(len(models), preview)
             )

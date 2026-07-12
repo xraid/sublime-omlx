@@ -38,11 +38,19 @@ The plugin requires Sublime Text build **4050 or newer** (Python 3.8+ plugin hos
 oMLX provides optimized LLM inference for Apple Silicon and Intel Macs. No network egress, local-only inference.
 
 1. Install oMLX: https://github.com/jundot/omlx
-2. Start the server and generate an API key in the oMLX admin interface.
-3. Store the API key in `~/.config/sublime-omlx/config.json` under `providers.omlx.api_key`.
-4. In Sublime: `Tools -> oMLX: Open Chat` (or use the command palette: `oMLX: Open Chat`).
-5. Type a message after the `<user> ` prompt.
-6. Press `Ctrl+Enter` (macOS: `Cmd+Enter`) to send.
+2. Start the oMLX server.
+3. Generate an **admin API key** in the oMLX admin interface (not per-app subkeys).
+4. Store the admin key in `~/.config/sublime-omlx/config.json` under `providers.omlx.api_key`:
+   ```json
+   "omlx": {
+     "api_key": "your-admin-key-from-omlx-admin-interface",
+     "base_url": "http://localhost:8000/v1"
+   }
+   ```
+   Do **not** set a `model` field here — use `oMLX: Choose Model` in Sublime instead.
+5. In Sublime: `Tools -> oMLX: Open Chat` (or use the command palette: `oMLX: Open Chat`).
+6. Type a message after the `<user> ` prompt.
+7. Press `Ctrl+Enter` (macOS: `Cmd+Enter`) to send.
 
 Default settings already point at local oMLX:
 
@@ -103,9 +111,9 @@ Example:
   "active_provider": "omlx",
   "providers": {
     "omlx": {
-      "api_key": "your-key-from-omlx-admin",
+      "api_key": "your-admin-key-from-omlx-admin-interface",
       "base_url": "http://localhost:8000/v1",
-      "model": "Qwen2.5-Coder-1.5B-Instruct-MLX-8bit"
+      "label": "oMLX"
     },
     "openai": {
       "api_key": "sk-...",
@@ -121,6 +129,8 @@ Example:
   }
 }
 ```
+
+**For oMLX:** Use the admin API key from the oMLX admin interface, not per-app subkeys. Leave out the `model` field to use the `oMLX: Choose Model` command for interactive model selection.
 
 Provider settings are read from `providers.<name>` and can include `base_url`, `model`, `api_key`, `referer`, `title`, `models`, or `label` depending on the provider. `active_provider` selects the provider when `provider` is not set elsewhere.
 

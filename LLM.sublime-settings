@@ -35,6 +35,8 @@
     // README "External provider config".
     "allow_secrets_in_settings_file": false,
 
+    // "omlx_api_key": "",
+
     // Optional OpenRouter attribution headers. Both may be left empty.
     "openrouter_referer": "",
     "openrouter_title": "",

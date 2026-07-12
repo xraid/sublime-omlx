@@ -40,7 +40,7 @@ oMLX provides optimized LLM inference for Apple Silicon and Intel Macs. No netwo
 1. Install oMLX: https://github.com/jundot/omlx
 2. Start the server and generate an API key in the oMLX admin interface.
 3. Store the API key in `~/.config/sublime-omlx/config.json` under `providers.omlx.api_key`.
-4. In Sublime: `Tools -> LLM: Open Chat` (or use the command palette: `LLM: Open Chat`).
+4. In Sublime: `Tools -> oMLX: Open Chat` (or use the command palette: `oMLX: Open Chat`).
 5. Type a message after the `<user> ` prompt.
 6. Press `Ctrl+Enter` (macOS: `Cmd+Enter`) to send.
 
@@ -50,7 +50,16 @@ Default settings already point at local oMLX:
 - `base_url`: `"http://localhost:8000/v1"`
 - `model`: `"Qwen2.5-Coder-1.5B-Instruct-MLX-8bit"` (default oMLX model)
 
-Use `LLM: Choose Model` to switch models, or update `providers.omlx.model` in `config.json`.
+### Choosing a model
+
+Use `oMLX: Choose Model` from the command palette to pick a model. The plugin will:
+1. Fetch available models from oMLX's `/v1/models` endpoint
+2. Save your selection to local settings
+3. Load the model on-demand when you send your first message
+
+oMLX keeps frequently-used models loaded in unified memory and evicts least-recently-used models when memory runs low. You can also manage model loading directly in the oMLX admin interface.
+
+**Settings priority:** If you set `model` in `~/.config/sublime-omlx/config.json`, it overrides the plugin's local choice. To use `oMLX: Choose Model`, leave the model setting out of the external config file.
 
 If oMLX isn't running, the plugin reports `oMLX (UNREACHABLE)` in the provider menu.
 
@@ -81,7 +90,7 @@ Beyond local oMLX inference, you can use hosted cloud providers. To configure Op
       "model": "deepseek-v4-flash"
     },
    ```
-   Update `model` to change the default model or select "LLM: Choose Model" from the command palette to pick a specific model from the chosen provider.
+   Update `model` to set a default model, or use `oMLX: Choose Model` from the command palette to pick a model interactively.
 
 ## External provider config and API keys
 
@@ -141,7 +150,7 @@ On POSIX systems, the plugin checks external config and legacy key-only file per
 
 Whenever a key is resolved, it is registered with the logger's redacting filter so it cannot accidentally appear in log output, even from third-party libraries.
 
-You can verify which source a key came from with `LLM: Show External Config Status`. The display masks all but the last four characters of every key.
+You can verify which source a key came from with `oMLX: Show External Config Status`. The display masks all but the last four characters of every key.
 
 ### Recommended .gitignore
 
@@ -166,21 +175,21 @@ Default bindings:
 | `Ctrl+Shift+L` | `Cmd+Shift+L` | any view, with a non-empty selection | Send the selection to the chat view as a fenced code block. |
 | `Esc` | `Esc` | chat view, while streaming | Cancel the in-flight response. |
 
-All commands are also reachable via the command palette under the `LLM: ` prefix:
+All commands are also reachable via the command palette under the `oMLX: ` prefix:
 
 | Command | Effect |
 |---|---|
-| `LLM: Open Chat` | Open or focus the chat view (creates a side group if needed). |
-| `LLM: Submit Message` | Send the current input region. |
-| `LLM: Send Selection to Chat` | Pre-fill chat input with the current selection wrapped in a fenced code block. |
-| `LLM: Cancel` | Cancel an in-flight stream. |
-| `LLM: Choose Model` | Quick-panel model picker. |
-| `LLM: Choose Provider` | Quick-panel provider picker with health badges. |
-| `LLM: Show Status` | Diagnostic display: provider, model, health, model count. |
-| `LLM: Show External Config Status` | Per-provider key source, last-four-character masked. |
-| `LLM: Clear Chat History` | Empty the chat for the current project and remove its on-disk transcript. |
+| `oMLX: Open Chat` | Open or focus the chat view (creates a side group if needed). |
+| `oMLX: Submit Message` | Send the current input region. |
+| `oMLX: Send Selection to Chat` | Pre-fill chat input with the current selection wrapped in a fenced code block. |
+| `oMLX: Cancel` | Cancel an in-flight stream. |
+| `oMLX: Choose Model` | Quick-panel model picker. |
+| `oMLX: Choose Provider` | Quick-panel provider picker with health badges. |
+| `oMLX: Show Status` | Diagnostic display: provider, model, health, model count. |
+| `oMLX: Show External Config Status` | Per-provider key source, last-four-character masked. |
+| `oMLX: Clear Chat History` | Empty the chat for the current project and remove its on-disk transcript. |
 
-`LLM: Open Chat` is also wired into `Tools -> LLM: Open Chat`. `LLM: Send Selection to Chat` is wired into the editor's right-click context menu when a selection is non-empty.
+`oMLX: Open Chat` is also wired into `Tools -> oMLX: Open Chat`. `oMLX: Send Selection to Chat` is wired into the editor's right-click context menu when a selection is non-empty.
 
 ## Settings reference
 
@@ -226,14 +235,14 @@ Per-project overrides go in your `.sublime-project`:
 - The input region is the text after the last `<user> ` prompt — type freely there.
 - The chat view is a Sublime scratch buffer; it will not prompt to save on close. Per-project on-disk persistence keeps the conversation across restarts under `Packages/User/sublime-omlx/chats/<slug>.md`.
 - Fenced code blocks (e.g. ```` ```python ````) get language-specific syntax highlighting via the standard Markdown embedding mechanism. The chat syntax is `ChatMarkdown.sublime-syntax`, shipped with the plugin.
-- One active chat per window. Reopening it via `LLM: Open Chat` focuses the existing view instead of creating a new one.
+- One active chat per window. Reopening it via `oMLX: Open Chat` focuses the existing view instead of creating a new one.
 
 ## Sending a selection to chat
 
 With a non-empty selection in any view:
 
-- Right-click and pick `LLM: Send Selection to Chat`, or
-- Run `LLM: Send Selection to Chat` from the command palette.
+- Right-click and pick `oMLX: Send Selection to Chat`, or
+- Run `oMLX: Send Selection to Chat` from the command palette.
 
 This command ships without a default key binding to avoid clashing with Sublime's built-in `Ctrl+Shift+L` / `Cmd+Shift+L` ("Split selection into lines"). To bind it yourself, add to `Packages/User/Default.sublime-keymap` (commented examples are in the plugin's `Default.sublime-keymap`):
 
@@ -261,11 +270,11 @@ If the chat input already contains text, the selection is appended below a blank
 
 **`UNREACHABLE` for a hosted provider.** Check your network and corporate proxy. The plugin issues plain `urllib` requests; it doesn't read `http_proxy`/`https_proxy` env vars automatically (Sublime's bundled Python doesn't include `urllib3` request-level proxy detection).
 
-**`MISSING_CREDENTIAL` / `BAD_CREDENTIAL` for OpenAI, Anthropic, OpenRouter, DeepSeek.** Verify the key resolution source with `LLM: Show External Config Status` — it shows whether each key was resolved from env, external config, legacy file, settings, or is missing, with the last four characters masked. If env vars aren't picked up on macOS, see the launchd caveat above.
+**`MISSING_CREDENTIAL` / `BAD_CREDENTIAL` for OpenAI, Anthropic, OpenRouter, DeepSeek.** Verify the key resolution source with `oMLX: Show External Config Status` — it shows whether each key was resolved from env, external config, legacy file, settings, or is missing, with the last four characters masked. If env vars aren't picked up on macOS, see the launchd caveat above.
 
 **Streaming feels slow.** Token batching is set to flush every 50 ms server-side; the actual cadence is dominated by the upstream model. A typing indicator is planned in the post-MVP backlog (ticket H5).
 
-**Chat view is gone.** `LLM: Open Chat` reopens or focuses it. Chat content lives in a scratch buffer; per-project on-disk persistence keeps the conversation across restarts.
+**Chat view is gone.** `oMLX: Open Chat` reopens or focuses it. Chat content lives in a scratch buffer; per-project on-disk persistence keeps the conversation across restarts.
 
 **Stream looks corrupted.** A `STREAM_CORRUPTED` message means the plugin received bytes it couldn't parse as the provider's expected wire format. Cancel and retry. If it reproduces, file an issue with the provider name and (sanitized) sample.
 

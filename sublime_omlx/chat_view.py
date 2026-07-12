@@ -12,7 +12,7 @@ from .logging_setup import get_logger
 CHAT_VIEW_SETTING = "sublime_omlx_chat_view"
 CHAT_VIEW_STREAMING_SETTING = "sublime_omlx_streaming"
 CHAT_VIEW_NAME = "LLM Chat"
-CHAT_SYNTAX_PATH = "Packages/LLM/ChatMarkdown.sublime-syntax"
+CHAT_SYNTAX_PATH = "Packages/sublime-omlx/ChatMarkdown.sublime-syntax"
 
 
 @dataclass

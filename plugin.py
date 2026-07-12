@@ -11,22 +11,22 @@ for module_name in [
     del sys.modules[module_name]
 
 # Imported names register the commands and event listener with the plugin host.
-from .sublime_llm.logging_setup import get_logger
-from .sublime_llm.chat_view import ChatViewEvents
-from .sublime_llm.commands import (
-    SublimeLlmCancelCommand,
-    SublimeLlmChooseModelCommand,
-    SublimeLlmChooseProviderCommand,
-    SublimeLlmClearChatCommand,
-    SublimeLlmOpenChatCommand,
-    SublimeLlmRenderLastResponseCommand,
-    SublimeLlmSendFileCommand,
-    SublimeLlmSendSelectionCommand,
-    SublimeLlmShowSecretStatusCommand,
-    SublimeLlmShowStatusCommand,
-    SublimeLlmSubmitCommand,
+from .sublime_omlx.logging_setup import get_logger
+from .sublime_omlx.chat_view import ChatViewEvents
+from .sublime_omlx.commands import (
+    SublimeOmlxCancelCommand,
+    SublimeOmlxChooseModelCommand,
+    SublimeOmlxChooseProviderCommand,
+    SublimeOmlxClearChatCommand,
+    SublimeOmlxOpenChatCommand,
+    SublimeOmlxRenderLastResponseCommand,
+    SublimeOmlxSendFileCommand,
+    SublimeOmlxSendSelectionCommand,
+    SublimeOmlxShowSecretStatusCommand,
+    SublimeOmlxShowStatusCommand,
+    SublimeOmlxSubmitCommand,
 )
-from .sublime_llm.text_commands import SublimeLlmAppendCommand, SublimeLlmNoopCommand
+from .sublime_omlx.text_commands import SublimeOmlxAppendCommand, SublimeOmlxNoopCommand
 
 
 def plugin_loaded() -> None:

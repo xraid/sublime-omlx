@@ -15,7 +15,7 @@ _TEST_STORAGE_ROOT: Optional[str] = None
 def _storage_root() -> str:
     if _TEST_STORAGE_ROOT is not None:
         return _TEST_STORAGE_ROOT
-    return os.path.join(sublime.packages_path(), "User", "sublime-llm", "chats")
+    return os.path.join(sublime.packages_path(), "User", "sublime-omlx", "chats")
 
 
 def _slug_for_project(project_file_name: str) -> str:

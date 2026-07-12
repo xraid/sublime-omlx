@@ -224,7 +224,7 @@ Per-project overrides go in your `.sublime-project`:
 
 - The conversation is plain Markdown. Each turn starts with a prompt: `<user> ` or `<assistant> ` (an optional <system> ` is also recognized by the syntax).
 - The input region is the text after the last `<user> ` prompt — type freely there.
-- The chat view is a Sublime scratch buffer; it will not prompt to save on close. Per-project on-disk persistence keeps the conversation across restarts under `Packages/User/sublime-llm/chats/<slug>.md`.
+- The chat view is a Sublime scratch buffer; it will not prompt to save on close. Per-project on-disk persistence keeps the conversation across restarts under `Packages/User/sublime-omlx/chats/<slug>.md`.
 - Fenced code blocks (e.g. ```` ```python ````) get language-specific syntax highlighting via the standard Markdown embedding mechanism. The chat syntax is `ChatMarkdown.sublime-syntax`, shipped with the plugin.
 - One active chat per window. Reopening it via `LLM: Open Chat` focuses the existing view instead of creating a new one.
 

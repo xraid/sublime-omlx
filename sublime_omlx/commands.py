@@ -57,7 +57,7 @@ def _infer_lang(view) -> str:
     return _SYNTAX_TO_LANG.get(basename, "")
 
 
-class SublimeLlmOpenChatCommand(sublime_plugin.WindowCommand):
+class SublimeOmlxOpenChatCommand(sublime_plugin.WindowCommand):
     def run(self) -> None:
         # Existing live view in this window — just focus it.
         if ChatView.find(self.window) is not None:
@@ -105,7 +105,7 @@ class SublimeLlmOpenChatCommand(sublime_plugin.WindowCommand):
         return True
 
 
-class SublimeLlmSubmitCommand(sublime_plugin.WindowCommand):
+class SublimeOmlxSubmitCommand(sublime_plugin.WindowCommand):
     def run(self) -> None:
         chat_view = ChatView.create_or_focus(self.window)
         user_text = chat_view.read_input()
@@ -134,7 +134,7 @@ class SublimeLlmSubmitCommand(sublime_plugin.WindowCommand):
             return
 
         chat_view.get_view().run_command(
-            "sublime_llm_append", {"text": "\n<assistant> ", "trim_trailing": True}
+            "sublime_omlx_append", {"text": "\n<assistant> ", "trim_trailing": True}
         )
         # Reset cancel event for the new request.
         cancel_event = chat_view.get_cancel_event()
@@ -246,7 +246,7 @@ class SublimeLlmSubmitCommand(sublime_plugin.WindowCommand):
             sublime.status_message("LLM: done")
 
 
-class SublimeLlmCancelCommand(sublime_plugin.WindowCommand):
+class SublimeOmlxCancelCommand(sublime_plugin.WindowCommand):
     def run(self) -> None:
         chat_view = ChatView.find(self.window)
         if chat_view is None:
@@ -267,7 +267,7 @@ class SublimeLlmCancelCommand(sublime_plugin.WindowCommand):
         return bool(handle.streaming)
 
 
-class SublimeLlmClearChatCommand(sublime_plugin.WindowCommand):
+class SublimeOmlxClearChatCommand(sublime_plugin.WindowCommand):
     def run(self) -> None:
         prompt = "Clear chat history for this project? This cannot be undone."
         confirmed = False
@@ -337,7 +337,7 @@ _DEFAULT_SEND_FILE_PROMPT = (
 _SEND_FILE_MAX_BYTES = 1024 * 1024  # 1 MiB hard cap; warn at half this.
 
 
-class SublimeLlmSendFileCommand(sublime_plugin.WindowCommand):
+class SublimeOmlxSendFileCommand(sublime_plugin.WindowCommand):
     def run(self, files=None, dirs=None) -> None:
         path = None
         if files:
@@ -435,10 +435,10 @@ class SublimeLlmSendFileCommand(sublime_plugin.WindowCommand):
 
         # Auto-submit. Defer slightly so the view updates and the fold settles
         # before the submit pipeline reads the buffer.
-        self.window.run_command("sublime_llm_submit")
+        self.window.run_command("sublime_omlx_submit")
 
 
-class SublimeLlmSendSelectionCommand(sublime_plugin.TextCommand):
+class SublimeOmlxSendSelectionCommand(sublime_plugin.TextCommand):
     def is_enabled(self) -> bool:
         try:
             return any(not r.empty() for r in self.view.sel())
@@ -469,7 +469,7 @@ class SublimeLlmSendSelectionCommand(sublime_plugin.TextCommand):
         view.sel().clear()
         view.sel().add(sublime.Region(view.size()))
         view.show(view.size())
-        window.run_command("sublime_llm_submit")
+        window.run_command("sublime_omlx_submit")
 
 
 def _settings_dict_for(provider_name: str) -> dict:
@@ -524,7 +524,7 @@ def _try_build_provider(name: str):
         return None
 
 
-class SublimeLlmChooseModelCommand(sublime_plugin.WindowCommand):
+class SublimeOmlxChooseModelCommand(sublime_plugin.WindowCommand):
     def run(self) -> None:
         settings = get_settings()
         provider_name = settings.get_provider()
@@ -607,7 +607,7 @@ class SublimeLlmChooseModelCommand(sublime_plugin.WindowCommand):
         self.window.show_quick_panel(models, on_select)
 
 
-class SublimeLlmChooseProviderCommand(sublime_plugin.WindowCommand):
+class SublimeOmlxChooseProviderCommand(sublime_plugin.WindowCommand):
     def run(self) -> None:
         # Health badges land in F6; if probe helper exists, use it.
         thread = threading.Thread(target=self._probe_and_show, daemon=True)
@@ -693,7 +693,7 @@ def _chat_history_path(window) -> str:
         return "(error: {0})".format(e)
 
 
-class SublimeLlmShowStatusCommand(sublime_plugin.WindowCommand):
+class SublimeOmlxShowStatusCommand(sublime_plugin.WindowCommand):
     def run(self) -> None:
         thread = threading.Thread(target=self._probe_and_show, daemon=True)
         thread.start()
@@ -774,7 +774,7 @@ class SublimeLlmShowStatusCommand(sublime_plugin.WindowCommand):
         self.window.run_command("show_panel", {"panel": "output.llm_status"})
 
 
-class SublimeLlmShowSecretStatusCommand(sublime_plugin.WindowCommand):
+class SublimeOmlxShowSecretStatusCommand(sublime_plugin.WindowCommand):
     def run(self) -> None:
         thread = threading.Thread(target=self._resolve_and_show, daemon=True)
         thread.start()
@@ -817,10 +817,10 @@ class SublimeLlmShowSecretStatusCommand(sublime_plugin.WindowCommand):
         self.window.run_command("show_panel", {"panel": "output.llm_secret_status"})
 
 
-_RENDER_PHANTOM_KEY = "sublime_llm_render_link"
+_RENDER_PHANTOM_KEY = "sublime_omlx_render_link"
 _RENDER_THRESHOLD_LINES = 10
 
-_THINKING_PHANTOM_KEY = "sublime_llm_thinking"
+_THINKING_PHANTOM_KEY = "sublime_omlx_thinking"
 _THINKING_FRAMES = [
     "thinking",
     "thinking.",
@@ -927,7 +927,7 @@ def _maybe_add_render_phantom(view) -> None:
 
     def on_navigate(href, win=view.window()):
         if win is not None:
-            win.run_command("sublime_llm_render_last_response")
+            win.run_command("sublime_omlx_render_last_response")
 
     try:
         view.erase_phantoms(_RENDER_PHANTOM_KEY)
@@ -942,7 +942,7 @@ def _maybe_add_render_phantom(view) -> None:
     )
 
 
-class SublimeLlmRenderLastResponseCommand(sublime_plugin.WindowCommand):
+class SublimeOmlxRenderLastResponseCommand(sublime_plugin.WindowCommand):
     def run(self) -> None:
         chat = ChatView.find(self.window)
         if chat is None:

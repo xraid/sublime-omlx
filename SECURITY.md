@@ -23,7 +23,7 @@ In scope:
 
 - Code in this repository (`plugin.py`, `sublime_llm/`, the shipped `.sublime-*` files).
 - The secret-resolution chain (`sublime_llm.secrets`) and the redacting log filter (`sublime_llm.logging_setup`).
-- The chat persistence path under `Packages/User/sublime-llm/chats/`.
+- The chat persistence path under `Packages/User/sublime-omlx/chats/`.
 - Any of the bundled provider implementations under `sublime_llm/providers/`.
 
 Out of scope:

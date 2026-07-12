@@ -9,8 +9,8 @@ import sublime_plugin
 from . import persistence
 from .logging_setup import get_logger
 
-CHAT_VIEW_SETTING = "sublime_llm_chat_view"
-CHAT_VIEW_STREAMING_SETTING = "sublime_llm_streaming"
+CHAT_VIEW_SETTING = "sublime_omlx_chat_view"
+CHAT_VIEW_STREAMING_SETTING = "sublime_omlx_streaming"
 CHAT_VIEW_NAME = "LLM Chat"
 CHAT_SYNTAX_PATH = "Packages/LLM/ChatMarkdown.sublime-syntax"
 
@@ -157,7 +157,7 @@ class ChatView:
             get_logger().warning("chat persistence: load raised; starting fresh")
             loaded = None
         if loaded:
-            view.run_command("sublime_llm_append", {"text": loaded})
+            view.run_command("sublime_omlx_append", {"text": loaded})
             view.sel().clear()
             view.sel().add(sublime.Region(view.size()))
             view.show(view.size())
@@ -167,7 +167,7 @@ class ChatView:
 
     def init_template(self) -> None:
         view = self._view
-        view.run_command("sublime_llm_append", {"text": "<user> "})
+        view.run_command("sublime_omlx_append", {"text": "<user> "})
         view.sel().clear()
         view.sel().add(sublime.Region(view.size()))
         view.show(view.size())
@@ -191,16 +191,16 @@ class ChatView:
 
     def append_turn(self, role: str, text: str) -> None:
         self._view.run_command(
-            "sublime_llm_append",
+            "sublime_omlx_append",
             {"text": "<{0}> {1}\n".format(role.lower(), text)},
         )
 
     def append_raw(self, text: str) -> None:
-        self._view.run_command("sublime_llm_append", {"text": text})
+        self._view.run_command("sublime_omlx_append", {"text": text})
 
     def _append_streamed(self, text: str) -> None:
         view = self._view
-        view.run_command("sublime_llm_append", {"text": text})
+        view.run_command("sublime_omlx_append", {"text": text})
         try:
             visible_end = view.visible_region().end()
         except Exception:
@@ -211,7 +211,7 @@ class ChatView:
     def append_user_marker(self) -> None:
         view = self._view
         view.run_command(
-            "sublime_llm_append", {"text": "\n<user> ", "trim_trailing": True}
+            "sublime_omlx_append", {"text": "\n<user> ", "trim_trailing": True}
         )
         view.sel().clear()
         view.sel().add(sublime.Region(view.size()))
@@ -279,9 +279,9 @@ class ChatViewEvents(sublime_plugin.EventListener):
             return None
         for s in view.sel():
             if s.empty() and s.begin() <= start:
-                return ("sublime_llm_noop", {})
+                return ("sublime_omlx_noop", {})
             if s.begin() < start:
-                return ("sublime_llm_noop", {})
+                return ("sublime_omlx_noop", {})
         return None
 
     def on_pre_close(self, view) -> None:

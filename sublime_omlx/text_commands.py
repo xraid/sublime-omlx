@@ -1,14 +1,14 @@
-"""Text commands for sublime-llm."""
+"""Text commands for sublime-omlx."""
 import sublime
 import sublime_plugin
 
 
-class SublimeLlmNoopCommand(sublime_plugin.TextCommand):
+class SublimeOmlxNoopCommand(sublime_plugin.TextCommand):
     def run(self, edit) -> None:
         return
 
 
-class SublimeLlmAppendCommand(sublime_plugin.TextCommand):
+class SublimeOmlxAppendCommand(sublime_plugin.TextCommand):
     def run(self, edit, text: str, trim_trailing: bool = False) -> None:
         was_read_only = self.view.is_read_only()
         self.view.set_read_only(False)

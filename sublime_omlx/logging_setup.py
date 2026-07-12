@@ -4,7 +4,7 @@ import re
 import sys
 from typing import Set
 
-_LOGGER_NAME = "sublime_llm"
+_LOGGER_NAME = "sublime_omlx"
 _REDACTED = "[REDACTED]"
 
 _REGEX_PATTERNS = [

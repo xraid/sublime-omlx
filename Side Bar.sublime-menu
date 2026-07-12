@@ -1,3 +1,3 @@
 [
-    {"caption": "LLM: Send File to Chat", "command": "sublime_omlx_send_file"}
+    {"caption": "oMLX: Send File to Chat", "command": "sublime_omlx_send_file"}
 ]

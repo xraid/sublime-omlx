@@ -739,7 +739,7 @@ class SublimeOmlxShowStatusCommand(sublime_plugin.WindowCommand):
         lines.append("==================")
         lines.append("Provider: {0}".format(provider_name))
         if health is not None:
-            lines.append("Health: {0}".format(_health_label(health)))
+            lines.append("Provider Health: {0}".format(_health_label(health)))
         lines.append("Model: {0}".format(model))
         if base_url:
             lines.append("Base URL: {0}".format(base_url))
@@ -755,6 +755,8 @@ class SublimeOmlxShowStatusCommand(sublime_plugin.WindowCommand):
         else:
             lines.append("Available models: 0")
         if memory_info:
+            lines.append("")
+            lines.append("Server Health:")
             lines.append(memory_info)
         lines.append("Chat history: {0}".format(chat_path))
         lines.append("")
@@ -771,7 +773,7 @@ class SublimeOmlxShowStatusCommand(sublime_plugin.WindowCommand):
         sublime.set_timeout(lambda: self._render(text), 0)
 
     def _fetch_omlx_memory(self, base_url: str, log) -> str:
-        """Fetch memory info from oMLX /health endpoint."""
+        """Fetch health info from oMLX /health endpoint."""
         import json
         import urllib.error
         import urllib.request
@@ -784,19 +786,30 @@ class SublimeOmlxShowStatusCommand(sublime_plugin.WindowCommand):
             data = json.loads(resp.read().decode("utf-8"))
             resp.close()
 
-            loaded = data.get("loaded_count", 0)
-            total = data.get("model_count", 0)
+            lines = []
+            if "status" in data:
+                lines.append("  Status: {0}".format(data["status"]))
+            if "default_model" in data:
+                lines.append("  Default Model: {0}".format(data["default_model"]))
+            if "model_count" in data:
+                lines.append("  Available Models: {0}".format(data["model_count"]))
+            if "loaded_count" in data:
+                lines.append("  Loaded Models: {0}".format(data["loaded_count"]))
+
             current_mem = data.get("current_model_memory", 0)
             ceiling = data.get("final_ceiling", 0)
-
             if ceiling > 0:
                 current_mb = current_mem / (1024 * 1024)
                 ceiling_gb = ceiling / (1024 * 1024 * 1024)
-                return "Memory: {0:.1f} MB / {1:.1f} GB ({2} loaded, {3} available)".format(
-                    current_mb, ceiling_gb, loaded, total
+                available_gb = (ceiling - current_mem) / (1024 * 1024 * 1024)
+                lines.append(
+                    "  Memory: {0:.1f} MB / {1:.1f} GB ({2:.1f} GB free)".format(
+                        current_mb, ceiling_gb, available_gb
+                    )
                 )
+            return "\n".join(lines) if lines else ""
         except Exception as e:  # noqa: BLE001
-            log.debug("omlx memory fetch failed: %s", e)
+            log.debug("omlx health fetch failed: %s", e)
         return ""
 
     def _render(self, text: str) -> None:

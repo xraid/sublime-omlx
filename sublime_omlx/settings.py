@@ -4,7 +4,7 @@ from typing import Any, Callable, List, Optional
 
 import sublime
 
-SETTINGS_FILENAME = "LLM.sublime-settings"
+SETTINGS_FILENAME = "oMLX.sublime-settings"
 _ON_CHANGE_KEY = "sublime-llm"
 
 DEFAULTS = {

@@ -20,7 +20,7 @@
                                 "caption": "Settings",
                                 "command": "edit_settings",
                                 "args": {
-                                    "base_file": "${packages}/sublime-omlx/LLM.sublime-settings",
+                                    "base_file": "${packages}/sublime-omlx/oMLX.sublime-settings",
                                     "default": "{\n\t$0\n}\n"
                                 }
                             }

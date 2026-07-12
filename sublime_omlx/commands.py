@@ -110,12 +110,12 @@ class SublimeOmlxSubmitCommand(sublime_plugin.WindowCommand):
         chat_view = ChatView.create_or_focus(self.window)
         user_text = chat_view.read_input()
         if not user_text:
-            sublime.status_message("LLM: input is empty")
+            sublime.status_message("oMLX: input is empty")
             return
         handle = chat_view.get_handle()
         if handle is not None and handle.streaming:
             sublime.status_message(
-                "LLM: response in progress; press Esc or run LLM: Cancel"
+                "oMLX: response in progress; press Esc or run oMLX: Cancel"
             )
             return
 
@@ -123,14 +123,14 @@ class SublimeOmlxSubmitCommand(sublime_plugin.WindowCommand):
         system_prompt = settings.get_system_prompt()
         model = settings.get_model()
         if not model:
-            sublime.status_message("LLM: model not configured")
+            sublime.status_message("oMLX: model not configured")
             return
 
         view = chat_view.get_view()
         buffer_text = view.substr(sublime.Region(0, view.size()))
         messages = parse_messages(buffer_text, system_prompt)
         if not messages:
-            sublime.status_message("LLM: input is empty")
+            sublime.status_message("oMLX: input is empty")
             return
 
         chat_view.get_view().run_command(
@@ -142,7 +142,7 @@ class SublimeOmlxSubmitCommand(sublime_plugin.WindowCommand):
             cancel_event.clear()
         chat_view.set_streaming(True)
         _start_thinking_indicator(chat_view.get_view())
-        sublime.status_message("LLM: streaming...")
+        sublime.status_message("oMLX: streaming...")
 
         options = {
             "temperature": settings.get_temperature(),
@@ -218,7 +218,7 @@ class SublimeOmlxSubmitCommand(sublime_plugin.WindowCommand):
         _stop_thinking_indicator(chat_view.get_view())
         chat_view.append_raw("(error: {0} - {1})".format(err.code, err.message))
         chat_view.append_user_marker()
-        sublime.status_message("LLM: " + err.message)
+        sublime.status_message("oMLX: " + err.message)
 
     def _on_done(self, chat_view, cancelled: bool) -> None:
         _stop_thinking_indicator(chat_view.get_view())
@@ -241,9 +241,9 @@ class SublimeOmlxSubmitCommand(sublime_plugin.WindowCommand):
             except Exception:
                 get_logger().warning("render phantom: failed")
         if cancelled:
-            sublime.status_message("LLM: cancelled")
+            sublime.status_message("oMLX: cancelled")
         else:
-            sublime.status_message("LLM: done")
+            sublime.status_message("oMLX: done")
 
 
 class SublimeOmlxCancelCommand(sublime_plugin.WindowCommand):
@@ -255,7 +255,7 @@ class SublimeOmlxCancelCommand(sublime_plugin.WindowCommand):
         if event is None:
             return
         event.set()
-        sublime.status_message("LLM: cancelling...")
+        sublime.status_message("oMLX: cancelling...")
 
     def is_enabled(self) -> bool:
         chat_view = ChatView.find(self.window)
@@ -293,7 +293,7 @@ class SublimeOmlxClearChatCommand(sublime_plugin.WindowCommand):
                 except Exception:
                     pass
             chat_view.init_template()
-        sublime.status_message("LLM: chat history cleared")
+        sublime.status_message("oMLX: chat history cleared")
 
     def is_enabled(self) -> bool:
         if ChatView.find(self.window) is not None:
@@ -350,24 +350,24 @@ class SublimeOmlxSendFileCommand(sublime_plugin.WindowCommand):
                 path = view.file_name()
         if not path:
             sublime.status_message(
-                "LLM: no file selected — right-click a file in the sidebar"
+                "oMLX: no file selected — right-click a file in the sidebar"
             )
             return
         try:
             size = os.path.getsize(path)
         except OSError as e:
-            sublime.status_message("LLM: cannot stat {0}: {1}".format(path, e))
+            sublime.status_message("oMLX: cannot stat {0}: {1}".format(path, e))
             return
         if size > _SEND_FILE_MAX_BYTES:
             sublime.status_message(
-                "LLM: file too large ({0} bytes); 1 MiB max".format(size)
+                "oMLX: file too large ({0} bytes); 1 MiB max".format(size)
             )
             return
         try:
             with open(path, "r", encoding="utf-8", errors="replace") as f:
                 contents = f.read()
         except OSError as e:
-            sublime.status_message("LLM: cannot read {0}: {1}".format(path, e))
+            sublime.status_message("oMLX: cannot read {0}: {1}".format(path, e))
             return
 
         prompt = get_settings().get("send_file_prompt", _DEFAULT_SEND_FILE_PROMPT) or _DEFAULT_SEND_FILE_PROMPT
@@ -430,7 +430,7 @@ class SublimeOmlxSendFileCommand(sublime_plugin.WindowCommand):
         view.sel().add(sublime.Region(view.size()))
         view.show(view.size())
         sublime.status_message(
-            "LLM: analyzing {0}...".format(basename)
+            "oMLX: analyzing {0}...".format(basename)
         )
 
         # Auto-submit. Defer slightly so the view updates and the fold settles
@@ -531,7 +531,7 @@ class SublimeOmlxChooseModelCommand(sublime_plugin.WindowCommand):
         provider = _try_build_provider(provider_name)
         if provider is None:
             sublime.status_message(
-                "LLM: unknown provider '{0}'".format(provider_name)
+                "oMLX: unknown provider '{0}'".format(provider_name)
             )
             return
 
@@ -542,13 +542,13 @@ class SublimeOmlxChooseModelCommand(sublime_plugin.WindowCommand):
             key, source = resolve_key(provider_name)
             if key is None:
                 sublime.status_message(
-                    "LLM: no API key for {0}; run 'LLM: Show External Config Status'".format(
+                    "oMLX: no API key for {0}; run 'LLM: Show External Config Status'".format(
                         provider_name
                     )
                 )
                 return
 
-        sublime.status_message("LLM: fetching models...")
+        sublime.status_message("oMLX: fetching models...")
 
         thread = threading.Thread(
             target=self._fetch_and_show, args=(provider, provider_name), daemon=True
@@ -575,7 +575,7 @@ class SublimeOmlxChooseModelCommand(sublime_plugin.WindowCommand):
 
     def _empty_models_message(self, provider_name: str, health) -> str:
         if health is None:
-            return "LLM: {0}: model list request failed (see console)".format(
+            return "oMLX: {0}: model list request failed (see console)".format(
                 provider_name
             )
         try:
@@ -583,18 +583,18 @@ class SublimeOmlxChooseModelCommand(sublime_plugin.WindowCommand):
         except AttributeError:
             health_name = str(health)
         if health_name == "MISSING_CREDENTIAL":
-            return "LLM: {0}: API key missing or rejected (401)".format(
+            return "oMLX: {0}: API key missing or rejected (401)".format(
                 provider_name
             )
         if health_name == "UNREACHABLE":
-            return "LLM: {0}: endpoint unreachable; check network".format(
+            return "oMLX: {0}: endpoint unreachable; check network".format(
                 provider_name
             )
         if health_name == "MISCONFIGURED":
-            return "LLM: {0}: endpoint reachable but misconfigured (see console)".format(
+            return "oMLX: {0}: endpoint reachable but misconfigured (see console)".format(
                 provider_name
             )
-        return "LLM: {0}: no models returned".format(provider_name)
+        return "oMLX: {0}: no models returned".format(provider_name)
 
     def _show_panel(self, models) -> None:
         def on_select(idx: int) -> None:
@@ -602,7 +602,7 @@ class SublimeOmlxChooseModelCommand(sublime_plugin.WindowCommand):
                 return
             chosen = models[idx]
             _write_setting("model", chosen)
-            sublime.status_message("LLM: model set to {0}".format(chosen))
+            sublime.status_message("oMLX: model set to {0}".format(chosen))
 
         self.window.show_quick_panel(models, on_select)
 
@@ -664,7 +664,7 @@ class SublimeOmlxChooseProviderCommand(sublime_plugin.WindowCommand):
                 return
             chosen = names[idx]
             _write_setting("provider", chosen)
-            sublime.status_message("LLM: provider set to {0}".format(chosen))
+            sublime.status_message("oMLX: provider set to {0}".format(chosen))
 
         self.window.show_quick_panel(labels, on_select)
 
@@ -946,24 +946,24 @@ class SublimeOmlxRenderLastResponseCommand(sublime_plugin.WindowCommand):
     def run(self) -> None:
         chat = ChatView.find(self.window)
         if chat is None:
-            sublime.status_message("LLM: no chat view")
+            sublime.status_message("oMLX: no chat view")
             return
         view = chat.get_view()
         region = _find_last_assistant_region(view)
         if region is None:
-            sublime.status_message("LLM: no assistant response to render")
+            sublime.status_message("oMLX: no assistant response to render")
             return
         start, end = region
         body = view.substr(sublime.Region(start, end)).strip()
         if not body:
-            sublime.status_message("LLM: response is empty")
+            sublime.status_message("oMLX: response is empty")
             return
         html = wrap_minihtml(md_to_html(body))
         try:
             self.window.new_html_sheet("Rendered Response", html)
         except Exception as e:
             get_logger().warning("new_html_sheet failed: %s", e)
-            sublime.status_message("LLM: render failed (see console)")
+            sublime.status_message("oMLX: render failed (see console)")
 
     def is_enabled(self) -> bool:
         return ChatView.find(self.window) is not None

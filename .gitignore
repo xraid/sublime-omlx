@@ -1,7 +1,6 @@
 *.pyc
 __pycache__/
 .DS_Store
-package-metadata.json
 *.sublime-package
 
 # user-local test artifacts

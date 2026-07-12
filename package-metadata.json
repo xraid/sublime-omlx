@@ -1,0 +1,4 @@
+{
+	"description": "Chat interface for LLMs inside Sublime Text. Run local models on Mac with oMLX, or use hosted providers like OpenAI, Anthropic, OpenRouter, and DeepSeek",
+	"url": "https://github.com/xraid/sublime-omlx"
+}

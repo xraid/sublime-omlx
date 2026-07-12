@@ -3,9 +3,7 @@
     // "deepseek", "omlx", "custom".
     "provider": "omlx",
 
-    // Default Ollama model. With the default provider/base_url and this model,
-    // sublime-llm works without plugin-specific configuration after you install
-    // Ollama, start it, and run `ollama pull llama3.2`.
+    // Default oMLX model. Works out-of-the-box with oMLX running on localhost:8000.
     "model": "Qwen2.5-Coder-1.5B-Instruct-MLX-8bit",
 
     // Override the oMLX model list shown by the model picker if the

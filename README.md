@@ -1,4 +1,4 @@
-# LLM for Sublime Text
+# oMLX for Sublime Text
 
 **Renamed to [sublime-oMLX](https://github.com/xraid/sublime-omlx): oMLX-first fork optimized for macOS Silicon with local LLM inference.**
 

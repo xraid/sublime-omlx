@@ -152,7 +152,7 @@ Sublime auto-reloads the plugin on file change.
 
 ### Package Control
 
-Run `Package Control: Remove Package` and pick `LLM`.
+Run `Package Control: Remove Package` and pick `oMLX`.
 
 ### Manual install
 

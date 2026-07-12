@@ -708,6 +708,7 @@ class SublimeOmlxShowStatusCommand(sublime_plugin.WindowCommand):
         base_url = ""
         health = None
         models: list = []
+        memory_info = ""
         if provider is not None:
             base_url = getattr(provider, "base_url", "") or ""
             try:
@@ -720,6 +721,8 @@ class SublimeOmlxShowStatusCommand(sublime_plugin.WindowCommand):
             except Exception as e:  # noqa: BLE001
                 log.warning("list_models failed during status: %s", e)
                 models = []
+            if provider_name == "omlx":
+                memory_info = self._fetch_omlx_memory(base_url, log)
 
         key_line = ""
         if provider_name in HOSTED_PROVIDER_NAMES:
@@ -754,6 +757,8 @@ class SublimeOmlxShowStatusCommand(sublime_plugin.WindowCommand):
             )
         else:
             lines.append("Available models: 0")
+        if memory_info:
+            lines.append(memory_info)
         lines.append("Chat history: {0}".format(chat_path))
         lines.append("")
         lines.append("Settings:")
@@ -767,6 +772,35 @@ class SublimeOmlxShowStatusCommand(sublime_plugin.WindowCommand):
         text = "\n".join(lines) + "\n"
 
         sublime.set_timeout(lambda: self._render(text), 0)
+
+    def _fetch_omlx_memory(self, base_url: str, log) -> str:
+        """Fetch memory info from oMLX /health endpoint."""
+        import json
+        import urllib.error
+        import urllib.request
+
+        if not base_url:
+            return ""
+        health_url = base_url.rstrip("/v1") + "/health"
+        try:
+            resp = urllib.request.urlopen(health_url, timeout=5)
+            data = json.loads(resp.read().decode("utf-8"))
+            resp.close()
+
+            loaded = data.get("loaded_count", 0)
+            total = data.get("model_count", 0)
+            current_mem = data.get("current_model_memory", 0)
+            ceiling = data.get("final_ceiling", 0)
+
+            if ceiling > 0:
+                current_mb = current_mem / (1024 * 1024)
+                ceiling_gb = ceiling / (1024 * 1024 * 1024)
+                return "Memory: {0:.1f} MB / {1:.1f} GB ({2} loaded, {3} available)".format(
+                    current_mb, ceiling_gb, loaded, total
+                )
+        except Exception as e:  # noqa: BLE001
+            log.debug("omlx memory fetch failed: %s", e)
+        return ""
 
     def _render(self, text: str) -> None:
         panel = self.window.create_output_panel("omlx_status")

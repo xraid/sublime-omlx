@@ -23,6 +23,7 @@ from .sublime_omlx.commands import (
     SublimeOmlxSendFileCommand,
     SublimeOmlxSendSelectionCommand,
     SublimeOmlxShowSecretStatusCommand,
+    SublimeOmlxShowServerHealthCommand,
     SublimeOmlxShowStatusCommand,
     SublimeOmlxSubmitCommand,
 )

@@ -7,6 +7,7 @@
     {"caption": "oMLX: Choose Model", "command": "sublime_omlx_choose_model"},
     {"caption": "oMLX: Choose Provider", "command": "sublime_omlx_choose_provider"},
     {"caption": "oMLX: Show Status", "command": "sublime_omlx_show_status"},
+    {"caption": "oMLX: Show Server Health", "command": "sublime_omlx_show_server_health"},
     {"caption": "oMLX: Show External Config Status", "command": "sublime_omlx_show_secret_status"},
     {"caption": "oMLX: Render Last Response", "command": "sublime_omlx_render_last_response"},
     {"caption": "Preferences: oMLX Settings", "command": "edit_settings", "args": {"base_file": "${packages}/sublime-omlx/oMLX.sublime-settings", "default": "{\n\t$0\n}\n"}}

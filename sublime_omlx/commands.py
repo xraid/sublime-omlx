@@ -817,6 +817,82 @@ class SublimeOmlxShowStatusCommand(sublime_plugin.WindowCommand):
         self.window.run_command("show_panel", {"panel": "output.omlx_status"})
 
 
+class SublimeOmlxShowServerHealthCommand(sublime_plugin.WindowCommand):
+    def run(self) -> None:
+        thread = threading.Thread(target=self._probe_and_show, daemon=True)
+        thread.start()
+
+    def _probe_and_show(self) -> None:
+        log = get_logger()
+        settings = get_settings()
+        provider_name = settings.get_provider()
+
+        provider = _try_build_provider(provider_name)
+        base_url = ""
+        if provider is not None:
+            base_url = getattr(provider, "base_url", "") or ""
+
+        health_info = ""
+        if provider_name == "omlx" and base_url:
+            health_info = self._fetch_omlx_health(base_url, log)
+
+        if not health_info:
+            health_info = "No server health info available"
+
+        lines = []
+        lines.append("Server Health")
+        lines.append("==================")
+        lines.append(health_info)
+        text = "\n".join(lines) + "\n"
+
+        sublime.set_timeout(lambda: self._render(text), 0)
+
+    def _fetch_omlx_health(self, base_url: str, log) -> str:
+        """Fetch health info from oMLX /health endpoint."""
+        import json
+        import urllib.error
+        import urllib.request
+
+        if not base_url:
+            return ""
+        health_url = base_url.rstrip("/v1") + "/health"
+        try:
+            resp = urllib.request.urlopen(health_url, timeout=5)
+            data = json.loads(resp.read().decode("utf-8"))
+            resp.close()
+
+            lines = []
+            if "status" in data:
+                lines.append("Status: {0}".format(data["status"]))
+            if "default_model" in data:
+                lines.append("Default Model: {0}".format(data["default_model"]))
+            if "model_count" in data:
+                lines.append("Available Models: {0}".format(data["model_count"]))
+            if "loaded_count" in data:
+                lines.append("Loaded Models: {0}".format(data["loaded_count"]))
+
+            current_mem = data.get("current_model_memory", 0)
+            ceiling = data.get("final_ceiling", 0)
+            if ceiling > 0:
+                current_mb = current_mem / (1024 * 1024)
+                ceiling_gb = ceiling / (1024 * 1024 * 1024)
+                available_gb = (ceiling - current_mem) / (1024 * 1024 * 1024)
+                lines.append(
+                    "Memory: {0:.1f} MB / {1:.1f} GB ({2:.1f} GB free)".format(
+                        current_mb, ceiling_gb, available_gb
+                    )
+                )
+            return "\n".join(lines) if lines else ""
+        except Exception as e:  # noqa: BLE001
+            log.debug("omlx health fetch failed: %s", e)
+        return ""
+
+    def _render(self, text: str) -> None:
+        panel = self.window.create_output_panel("omlx_server_health")
+        panel.run_command("append", {"characters": text})
+        self.window.run_command("show_panel", {"panel": "output.omlx_server_health"})
+
+
 class SublimeOmlxShowSecretStatusCommand(sublime_plugin.WindowCommand):
     def run(self) -> None:
         thread = threading.Thread(target=self._resolve_and_show, daemon=True)

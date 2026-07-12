@@ -12,6 +12,7 @@
             {"-": null},
             {"caption": "Clear Chat History", "command": "sublime_omlx_clear_chat"},
             {"caption": "Show Status", "command": "sublime_omlx_show_status"},
+            {"caption": "Show Server Health", "command": "sublime_omlx_show_server_health"},
             {"caption": "Show External Config Status", "command": "sublime_omlx_show_secret_status"},
             {"caption": "Render Last Response", "command": "sublime_omlx_render_last_response"}
         ]

@@ -8,7 +8,22 @@ This guide covers installing LLM into Sublime Text 4 on macOS, Linux, and Window
 - **Network access** if you plan to use a hosted provider (OpenAI, Anthropic, OpenRouter, DeepSeek, or a custom OpenAI-compatible endpoint). No network is required for oMLX.
 - **Required for default setup: [oMLX](https://github.com/jundot/omlx)** for optimized Mac inference (or skip to Path B for hosted providers).
 
-## Locate your Packages directory
+## Installation methods
+
+### Package Control (recommended)
+
+Once sublime-oMLX is listed on [Package Control](https://packagecontrol.io):
+
+1. Open the command palette (`Ctrl+Shift+P` / `Cmd+Shift+P`).
+2. Run `Package Control: Install Package`.
+3. Search for `LLM` and install.
+4. Restart Sublime Text.
+
+### Manual install (development / pre-release)
+
+To install from the git repository directly:
+
+#### Locate your Packages directory
 
 The Sublime `Packages` directory is where third-party packages live. From inside Sublime, run `Preferences -> Browse Packages...` to open it. The default paths are:
 
@@ -18,14 +33,14 @@ The Sublime `Packages` directory is where third-party packages live. From inside
 
 These paths are referenced as `<Packages>` below.
 
-### Option A — clone directly into the Packages directory
+#### Option A — clone directly into the Packages directory
 
 ```sh
 cd <Packages>
 git clone https://github.com/xraid/sublime-omlx.git LLM
 ```
 
-### Option B — clone elsewhere and symlink
+#### Option B — clone elsewhere and symlink
 
 Useful if you want the working copy somewhere outside Sublime's Packages directory (for example, alongside your other repos).
 
@@ -40,7 +55,7 @@ On Windows, use `mklink /D` from an elevated `cmd.exe`:
 mklink /D "%APPDATA%\Sublime Text\Packages\LLM" "C:\path\to\your\clone"
 ```
 
-### Restart Sublime Text
+#### Restart Sublime Text
 
 After cloning or symlinking, restart Sublime Text so the plugin host loads the package.
 

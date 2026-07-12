@@ -798,12 +798,12 @@ class SublimeOmlxShowStatusCommand(sublime_plugin.WindowCommand):
             current_mem = engine_pool.get("current_model_memory", 0)
             ceiling = engine_pool.get("final_ceiling", 0)
             if ceiling > 0:
-                current_mb = current_mem / (1024 * 1024)
+                current_gb = current_mem / (1024 * 1024 * 1024)
                 ceiling_gb = ceiling / (1024 * 1024 * 1024)
                 available_gb = (ceiling - current_mem) / (1024 * 1024 * 1024)
                 lines.append(
-                    "  Memory: {0:.1f} MB / {1:.1f} GB ({2:.1f} GB free)".format(
-                        current_mb, ceiling_gb, available_gb
+                    "  Memory: {0:.1f} GB / {1:.1f} GB ({2:.1f} GB free)".format(
+                        current_gb, ceiling_gb, available_gb
                     )
                 )
             return "\n".join(lines) if lines else ""
@@ -877,12 +877,12 @@ class SublimeOmlxShowServerHealthCommand(sublime_plugin.WindowCommand):
             ceiling = engine_pool.get("final_ceiling", 0)
             log.info("omlx memory: current=%d ceiling=%d", current_mem, ceiling)
             if ceiling > 0:
-                current_mb = current_mem / (1024 * 1024)
+                current_gb = current_mem / (1024 * 1024 * 1024)
                 ceiling_gb = ceiling / (1024 * 1024 * 1024)
                 available_gb = (ceiling - current_mem) / (1024 * 1024 * 1024)
                 lines.append(
-                    "Memory: {0:.1f} MB / {1:.1f} GB ({2:.1f} GB free)".format(
-                        current_mb, ceiling_gb, available_gb
+                    "Memory: {0:.1f} GB / {1:.1f} GB ({2:.1f} GB free)".format(
+                        current_gb, ceiling_gb, available_gb
                     )
                 )
             return "\n".join(lines) if lines else ""

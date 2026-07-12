@@ -788,15 +788,15 @@ class SublimeOmlxShowStatusCommand(sublime_plugin.WindowCommand):
             lines = []
             if "status" in data:
                 lines.append("  Status: {0}".format(data["status"]))
-            if "default_model" in data:
-                lines.append("  Default Model: {0}".format(data["default_model"]))
-            if "model_count" in data:
-                lines.append("  Available Models: {0}".format(data["model_count"]))
-            if "loaded_count" in data:
-                lines.append("  Loaded Models: {0}".format(data["loaded_count"]))
 
-            current_mem = data.get("current_model_memory", 0)
-            ceiling = data.get("final_ceiling", 0)
+            engine_pool = data.get("engine_pool", {})
+            if "model_count" in engine_pool:
+                lines.append("  Available Models: {0}".format(engine_pool["model_count"]))
+            if "loaded_count" in engine_pool:
+                lines.append("  Loaded Models: {0}".format(engine_pool["loaded_count"]))
+
+            current_mem = engine_pool.get("current_model_memory", 0)
+            ceiling = engine_pool.get("final_ceiling", 0)
             if ceiling > 0:
                 current_mb = current_mem / (1024 * 1024)
                 ceiling_gb = ceiling / (1024 * 1024 * 1024)
@@ -866,13 +866,15 @@ class SublimeOmlxShowServerHealthCommand(sublime_plugin.WindowCommand):
             lines = []
             if "status" in data:
                 lines.append("Status: {0}".format(data["status"]))
-            if "model_count" in data:
-                lines.append("Available Models: {0}".format(data["model_count"]))
-            if "loaded_count" in data:
-                lines.append("Loaded Models: {0}".format(data["loaded_count"]))
 
-            current_mem = data.get("current_model_memory", 0)
-            ceiling = data.get("final_ceiling", 0)
+            engine_pool = data.get("engine_pool", {})
+            if "model_count" in engine_pool:
+                lines.append("Available Models: {0}".format(engine_pool["model_count"]))
+            if "loaded_count" in engine_pool:
+                lines.append("Loaded Models: {0}".format(engine_pool["loaded_count"]))
+
+            current_mem = engine_pool.get("current_model_memory", 0)
+            ceiling = engine_pool.get("final_ceiling", 0)
             log.info("omlx memory: current=%d ceiling=%d", current_mem, ceiling)
             if ceiling > 0:
                 current_mb = current_mem / (1024 * 1024)

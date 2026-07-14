@@ -1,9 +1,18 @@
 # Changelog
 
-All notable changes to LLM (formerly `sublime-llm`) will be documented in this file.
+All notable changes to oMLX (a fork of LLM, formerly `sublime-llm`) will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [1.0.3] - 2026-07-14
+
+### Changed
+- Rebranded from **LLM** to **oMLX**. Plugin load message now displays `oMLX loaded` instead of `LLM loaded`.
+- Updated install and messaging documentation to focus on oMLX setup with admin API key flow for local Mac-optimized inference.
+
+### Removed
+- Redundant "Default Model" display from Server Health output (model info already shown in status bar).
 
 ## [1.0.2] - 2026-06-06
 
@@ -70,7 +79,8 @@ Initial release.
 ### Changed
 - Command palette caption now refers to external config status instead of secret storage status.
 
-[Unreleased]: https://github.com/tonylchang/sublime-llm/compare/v1.0.2...HEAD
-[1.0.2]: https://github.com/tonylchang/sublime-llm/compare/v1.0.1...v1.0.2
-[1.0.1]: https://github.com/tonylchang/sublime-llm/compare/v1.0.0...v1.0.1
-[1.0.0]: https://github.com/tonylchang/sublime-llm/releases/tag/v1.0.0
+[Unreleased]: https://github.com/xraid/sublime-omlx/compare/v1.0.3...HEAD
+[1.0.3]: https://github.com/xraid/sublime-omlx/compare/v1.0.2...v1.0.3
+[1.0.2]: https://github.com/xraid/sublime-omlx/compare/v1.0.1...v1.0.2
+[1.0.1]: https://github.com/xraid/sublime-omlx/compare/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/xraid/sublime-omlx/releases/tag/v1.0.0

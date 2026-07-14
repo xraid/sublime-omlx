@@ -1,0 +1,13 @@
+oMLX 1.0.3
+
+CHANGES
+
+- Plugin rebranded from "LLM" to "oMLX". Plugin load message now shows 'oMLX loaded'
+  instead of 'LLM loaded'.
+- Removed redundant "Default Model" display from Server Health output (model info
+  is already shown in status bar).
+
+Your external config (~/.config/sublime-omlx/config.json), saved chats,
+and user settings file are unchanged.
+
+See CHANGELOG.md for details.

@@ -13,3 +13,6 @@ secrets.json
 *.sublime-workspace
 .env
 .env.*
+
+# Claude Code
+.claude/
